@@ -1,0 +1,20 @@
+﻿@page "/your-pay"
+@model IncomeTax.Presentation.Web.Pages.YourPay
+@{
+    ViewData["Title"] = "Your Pay";
+}
+
+<form method="post">
+    @await Html.PartialAsync("YourPayPartials/_ErrorSummary", Model)
+
+    <h2 class="govuk-heading-l">How much are you paid?</h2>
+    
+    @await Html.PartialAsync("YourPayPartials/_TextInput", Model)
+    @await Html.PartialAsync("YourPayPartials/_RadioSet", Model)
+
+    <div class="govuk-button-group">
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+            Continue
+        </button>
+    </div>
+</form>

@@ -1,0 +1,20 @@
+﻿@model YourPay
+
+<div class="govuk-form-group@(Model.ErrorCost ? " govuk-form-group--error" : "")">
+    <h1 class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label--m" for="Cost">Gross amount, in pounds</label>
+        <div id="amount-hint" class="govuk-hint">This is the amount you are paid before any deductions are made.
+        </div>
+    </h1>
+    @if (Model.ErrorCost)
+    {
+        <p id="C__Error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> Enter the amount you are paid
+        </p>
+    }
+    <div class="govuk-input__wrapper">
+        <div class="govuk-input__prefix" aria-hidden="true">£</div>
+        <input class="govuk-input govuk-input--width-5" id="Cost" asp-for="Cost" type="text" spellcheck="false"
+               aria-describedby="C__Error">
+    </div>
+</div>
