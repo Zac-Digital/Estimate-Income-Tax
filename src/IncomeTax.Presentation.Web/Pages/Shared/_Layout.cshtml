@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="govuk-template govuk-template--rebranded">
+@await Html.PartialAsync("_Head")
+<body class="govuk-template__body">
+<script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+<a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+@await Html.PartialAsync("_Header")
+<div class="govuk-width-container">
+    <main class="govuk-main-wrapper" id="main-content">
+        @RenderBody()
+    </main>
+</div>
+@await Html.PartialAsync("_Footer")
+<script type="module" src="js/govuk-frontend.min.js"></script>
+<script type="module" src="js/moj-frontend.min.js"></script>
+<script type="module">
+        import * as GovUkFrontend from '/js/govuk-frontend.min.js'
+        import * as MojFrontend from '/js/moj-frontend.min.js'
+
+        GovUkFrontend.initAll();
+        MojFrontend.initAll();
+    </script>
+</body>
+</html>
