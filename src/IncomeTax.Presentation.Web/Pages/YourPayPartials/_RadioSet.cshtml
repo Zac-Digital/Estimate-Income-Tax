@@ -7,7 +7,7 @@
         </legend>
         @if (Model.ErrorFrequency)
         {
-            <p id="F__Error" class="govuk-error-message">
+            <p id="F__Error" data-testid="F__Error" class="govuk-error-message">
                 <span class="govuk-visually-hidden">Error:</span> Select how often you are paid this amount
             </p>
         }
@@ -15,7 +15,7 @@
             @foreach (string option in Model.Options)
             {
                 <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="F__@option" asp-for="Frequency" type="radio"
+                    <input class="govuk-radios__input" id="F__@option" data-testid="F__@option" asp-for="Frequency" type="radio"
                            value="@option">
                     <label class="govuk-label govuk-radios__label" for="F__@option">
                         @option

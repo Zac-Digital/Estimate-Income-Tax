@@ -2,7 +2,7 @@
 
 @if (Model.ErrorCost || Model.ErrorFrequency)
 {
-    <div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div class="govuk-error-summary" data-testid="Error-Summary" data-module="govuk-error-summary">
         <div role="alert">
             <h2 class="govuk-error-summary__title">
                 There is a problem
@@ -12,7 +12,7 @@
                 <div class="govuk-error-summary__body">
                     <ul class="govuk-list govuk-error-summary__list">
                         <li>
-                            <a href="#Cost">Enter the amount you are paid</a>
+                            <a href="#Cost" data-testid="Error-Summary__Cost">Enter the amount you are paid</a>
                         </li>
                     </ul>
                 </div>
@@ -22,7 +22,7 @@
                 <div class="govuk-error-summary__body">
                     <ul class="govuk-list govuk-error-summary__list">
                         <li>
-                            <a href="#F__@Model.Options[0]">Select how often you are paid this amount</a>
+                            <a href="#F__@Model.Options[0]" data-testid="Error-Summary__Frequency">Select how often you are paid this amount</a>
                         </li>
                     </ul>
                 </div>
