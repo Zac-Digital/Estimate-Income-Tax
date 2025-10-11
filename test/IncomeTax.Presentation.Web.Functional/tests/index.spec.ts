@@ -29,6 +29,6 @@ test.describe('Home Page', () => {
 
     test('start now button navigates to next page', async ({page}) => {
         await page.getByRole('button').click();
-        expect(page.url()).toContain('/your-pay');
+        expect(page.url()).toContain('/salary');
     });
 });
