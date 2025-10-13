@@ -1,0 +1,96 @@
+﻿@page "/check-answers"
+@model IncomeTax.Presentation.Web.Pages.CheckAnswers
+@{
+    ViewData["Title"] = "Check Answers";
+}
+
+<form method="post">
+    <h1 class="govuk-heading-xl">Check your answers</h1>
+
+    <h2 class="govuk-heading-l">Your Income</h2>
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Gross income
+            </dt>
+            <dd class="govuk-summary-list__value">
+                @Model.GrossIncome
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> gross income</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Over State Pension age
+            </dt>
+            <dd class="govuk-summary-list__value">
+                @Model.OverStatePensionAge
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> over state pension age</span></a>
+            </dd>
+        </div>
+    </dl>
+
+    <h2 class="govuk-heading-l">Additional questions (Optional)</h2>
+    <p class="govuk-body">Your results may be more accurate if you answer additional questions.</p>
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Tax Code
+            </dt>
+            <dd class="govuk-summary-list__value">
+                1257L
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Scottish Income Tax
+            </dt>
+            <dd class="govuk-summary-list__value">
+                Placeholder
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="#">Add<span class="govuk-visually-hidden"> scottish income tax</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Pension contributions
+            </dt>
+            <dd class="govuk-summary-list__value">
+                Placeholder
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="#">Add<span class="govuk-visually-hidden"> pension contributions</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Student loan
+            </dt>
+            <dd class="govuk-summary-list__value">
+                Placeholder
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="#">Add<span class="govuk-visually-hidden"> student loan</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Postgraduate loan
+            </dt>
+            <dd class="govuk-summary-list__value">
+                Placeholder
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="#">Add<span class="govuk-visually-hidden"> postgraduate loan</span></a>
+            </dd>
+        </div>
+    </dl>
+
+    <button type="submit" class="govuk-button" data-module="govuk-button">
+        Calculate take-home pay
+    </button>
+</form>

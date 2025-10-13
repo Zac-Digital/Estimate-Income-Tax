@@ -20,6 +20,6 @@ public class StatePension : PageModel
         
         userService.UpdateStatePension(IsOverStatePensionAge!.Value);
 
-        return Page(); // TODO: Next Page
+        return RedirectToPage("./CheckAnswers");
     }
 }

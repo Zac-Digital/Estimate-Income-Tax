@@ -35,7 +35,7 @@ test.describe('State Pension Page', () => {
     test('continue button navigates to next page', async ({page}) => {
         await page.getByTestId('state-pension__no').click();
         await page.getByRole('button').click();
-        expect(page.url()).toContain('/state-pension'); // TODO: Next Page
+        expect(page.url()).toContain('/check-answers');
     });
 });
 
