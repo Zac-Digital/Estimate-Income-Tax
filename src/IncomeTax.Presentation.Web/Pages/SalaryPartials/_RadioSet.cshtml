@@ -1,11 +1,11 @@
 ﻿@model Salary
 
-<div class="govuk-form-group@(Model.ErrorFrequency ? " govuk-form-group--error" : "")">
+<div class="govuk-form-group@(Model.ErrorFrequencyIsNotGiven ? " govuk-form-group--error" : "")">
     <fieldset class="govuk-fieldset" aria-describedby="salary__radio-set__error__frequency">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--m">
             <h1 class="govuk-fieldset__heading">How often are you paid this amount?</h1>
         </legend>
-        @if (Model.ErrorFrequency)
+        @if (Model.ErrorFrequencyIsNotGiven)
         {
             <p id="salary__radio-set__error__frequency" data-testid="salary__radio-set__error__frequency" class="govuk-error-message">
                 <span class="govuk-visually-hidden">Error:</span> Select how often you are paid this amount

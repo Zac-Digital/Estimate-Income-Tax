@@ -1,3 +1,5 @@
+using IncomeTax.Application;
+
 namespace IncomeTax.Presentation.Web;
 
 public static class Program
@@ -7,6 +9,7 @@ public static class Program
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddRazorPages();
+        builder.Services.AddSingleton<UserService>();
 
         WebApplication app = builder.Build();
 

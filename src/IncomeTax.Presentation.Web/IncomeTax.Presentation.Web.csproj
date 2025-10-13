@@ -56,4 +56,8 @@
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\LICENSE.txt" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\IncomeTax.Application\IncomeTax.Application.csproj" />
+    </ItemGroup>
+
 </Project>

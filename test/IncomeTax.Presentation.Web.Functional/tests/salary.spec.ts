@@ -42,7 +42,7 @@ test.describe('Salary Page', () => {
         await page.getByTestId('salary__text-input__amount').fill('32768.64');
         await page.getByTestId('salary__radio-set__frequency_Yearly').click();
         await page.getByRole('button').click();
-        expect(page.url()).toContain('/salary'); // TODO: Next Page
+        expect(page.url()).toContain('/state-pension');
     });
 });
 
@@ -53,18 +53,22 @@ test.describe('Salary Page - Error State', () => {
     
     test('no errors visible on initial page load', async ({page}) => {
         await expect(page.getByTestId('salary__error-summary__error')).not.toBeVisible();
-        await (expect(page.getByTestId('salary__error-summary__error__amount'))).not.toBeVisible();
+        await (expect(page.getByTestId('salary__error-summary__error__amount-invalid-type'))).not.toBeVisible();
+        await (expect(page.getByTestId('salary__error-summary__error__amount-decimal'))).not.toBeVisible();
         await (expect(page.getByTestId('salary__error-summary__error__frequency'))).not.toBeVisible();
-        await (expect(page.getByTestId('salary__text-input__error__amount'))).not.toBeVisible();
+        await (expect(page.getByTestId('salary__text-input__error__amount-invalid-type'))).not.toBeVisible();
+        await (expect(page.getByTestId('salary__text-input__error__amount-decimal'))).not.toBeVisible();
         await (expect(page.getByTestId('F__Error'))).not.toBeVisible();
     });
     
     test('no amount or frequency of salary given shows errors', async ({page}) => {
         await page.getByRole('button').click();
         await expect(page.getByTestId('salary__error-summary__error')).toBeVisible();
-        await (expect(page.getByTestId('salary__error-summary__error__amount'))).toBeVisible();
+        await (expect(page.getByTestId('salary__error-summary__error__amount-invalid-type'))).toBeVisible();
+        await (expect(page.getByTestId('salary__error-summary__error__amount-decimal'))).not.toBeVisible();
         await (expect(page.getByTestId('salary__error-summary__error__frequency'))).toBeVisible();
-        await (expect(page.getByTestId('salary__text-input__error__amount'))).toBeVisible();
+        await (expect(page.getByTestId('salary__text-input__error__amount-invalid-type'))).toBeVisible();
+        await (expect(page.getByTestId('salary__text-input__error__amount-decimal'))).not.toBeVisible();
         await (expect(page.getByTestId('salary__radio-set__error__frequency'))).toBeVisible();
     });
     
@@ -72,9 +76,9 @@ test.describe('Salary Page - Error State', () => {
         await page.getByTestId('salary__text-input__amount').fill('32768.64');
         await page.getByRole('button').click();
         await expect(page.getByTestId('salary__error-summary__error')).toBeVisible();
-        await (expect(page.getByTestId('salary__error-summary__error__amount'))).not.toBeVisible();
+        await (expect(page.getByTestId('salary__error-summary__error__amount-invalid-type'))).not.toBeVisible();
         await (expect(page.getByTestId('salary__error-summary__error__frequency'))).toBeVisible();
-        await (expect(page.getByTestId('salary__text-input__error__amount'))).not.toBeVisible();
+        await (expect(page.getByTestId('salary__text-input__error__amount-invalid-type'))).not.toBeVisible();
         await (expect(page.getByTestId('salary__radio-set__error__frequency'))).toBeVisible();
     });
     
@@ -82,9 +86,29 @@ test.describe('Salary Page - Error State', () => {
         await page.getByTestId('salary__radio-set__frequency_Yearly').click();
         await page.getByRole('button').click();
         await expect(page.getByTestId('salary__error-summary__error')).toBeVisible();
-        await (expect(page.getByTestId('salary__error-summary__error__amount'))).toBeVisible();
+        await (expect(page.getByTestId('salary__error-summary__error__amount-invalid-type'))).toBeVisible();
         await (expect(page.getByTestId('salary__error-summary__error__frequency'))).not.toBeVisible();
-        await (expect(page.getByTestId('salary__text-input__error__amount'))).toBeVisible();
+        await (expect(page.getByTestId('salary__text-input__error__amount-invalid-type'))).toBeVisible();
         await (expect(page.getByTestId('salary__radio-set__error__frequency'))).not.toBeVisible();
+    });
+    
+    test('amount with too many decimal places given shows relevant error', async ({page}) => {
+        await page.getByTestId('salary__text-input__amount').fill('32768.6432');
+        await page.getByRole('button').click();
+        await expect(page.getByTestId('salary__error-summary__error')).toBeVisible();
+        await (expect(page.getByTestId('salary__error-summary__error__amount-decimal'))).toBeVisible();
+        await (expect(page.getByTestId('salary__error-summary__error__amount-invalid-type'))).not.toBeVisible();
+        await (expect(page.getByTestId('salary__text-input__error__amount-decimal'))).toBeVisible();
+        await (expect(page.getByTestId('salary__text-input__error__amount-invalid-type'))).not.toBeVisible();
+    });
+
+    test('amount as a string shows invalid type error', async ({page}) => {
+        await page.getByTestId('salary__text-input__amount').fill('Invalid');
+        await page.getByRole('button').click();
+        await expect(page.getByTestId('salary__error-summary__error')).toBeVisible();
+        await (expect(page.getByTestId('salary__error-summary__error__amount-invalid-type'))).toBeVisible();
+        await (expect(page.getByTestId('salary__error-summary__error__amount-decimal'))).not.toBeVisible();
+        await (expect(page.getByTestId('salary__text-input__error__amount-invalid-type'))).toBeVisible();
+        await (expect(page.getByTestId('salary__text-input__error__amount-decimal'))).not.toBeVisible();
     });
 });

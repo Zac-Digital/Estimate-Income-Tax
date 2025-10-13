@@ -1,23 +1,33 @@
 ﻿@model Salary
 
-@if (Model.ErrorAmount || Model.ErrorFrequency)
+@if (!Model.ModelState.IsValid)
 {
     <div class="govuk-error-summary" data-testid="salary__error-summary__error" data-module="govuk-error-summary">
         <div role="alert">
             <h2 class="govuk-error-summary__title">
                 There is a problem
             </h2>
-            @if (Model.ErrorAmount)
+            @if (Model.ErrorAmountIsInvalidType)
             {
                 <div class="govuk-error-summary__body">
                     <ul class="govuk-list govuk-error-summary__list">
                         <li>
-                            <a href="#salary__text-input__amount" data-testid="salary__error-summary__error__amount">Enter the amount you are paid</a>
+                            <a href="#salary__text-input__amount" data-testid="salary__error-summary__error__amount-invalid-type">Enter the amount you are paid</a>
                         </li>
                     </ul>
                 </div>
             }
-            @if (Model.ErrorFrequency)
+            @if (Model.ErrorAmountIsNotTwoDecimalPlaces)
+            {
+                <div class="govuk-error-summary__body">
+                    <ul class="govuk-list govuk-error-summary__list">
+                        <li>
+                            <a href="#salary__text-input__amount" data-testid="salary__error-summary__error__amount-decimal">Enter the amount you are paid in the correct format, for example £512 or £128.64</a>
+                        </li>
+                    </ul>
+                </div>
+            }
+            @if (Model.ErrorFrequencyIsNotGiven)
             {
                 <div class="govuk-error-summary__body">
                     <ul class="govuk-list govuk-error-summary__list">
