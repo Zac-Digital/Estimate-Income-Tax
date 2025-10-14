@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using IncomeTax.Application;
+using IncomeTax.Domain.Constant;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,7 +9,7 @@ namespace IncomeTax.Presentation.Web.Pages;
 
 public class Salary : PageModel
 {
-    public readonly string[] Options = ["Yearly", "Monthly", "Every 4 weeks", "Weekly", "Daily", "Hourly"];
+    public readonly string[] Options = SalaryFrequencyExtensions.SalaryPageRadioSet;
 
     [BindProperty]
     [Required(ErrorMessage = nameof(ErrorAmountIsInvalidType))]

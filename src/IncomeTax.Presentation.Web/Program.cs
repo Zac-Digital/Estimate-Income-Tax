@@ -9,7 +9,17 @@ public static class Program
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddRazorPages();
-        builder.Services.AddSingleton<UserService>();
+
+        builder.Services.AddDistributedMemoryCache(); // TODO: Look at Redis later
+        builder.Services.AddHttpContextAccessor();
+        builder.Services.AddSession(options =>
+        {
+            options.IdleTimeout = TimeSpan.FromMinutes(10);
+            options.Cookie.HttpOnly = true;
+            options.Cookie.IsEssential = true;
+        });
+        
+        builder.Services.AddTransient<UserService>();
 
         WebApplication app = builder.Build();
 
@@ -23,6 +33,7 @@ public static class Program
         app.UseHttpsRedirection();
 
         app.UseRouting();
+        app.UseSession();
         app.MapStaticAssets();
         app.MapRazorPages().WithStaticAssets();
 

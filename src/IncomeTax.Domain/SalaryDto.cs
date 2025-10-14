@@ -1,7 +1,5 @@
-﻿namespace IncomeTax.Domain;
+﻿using IncomeTax.Domain.Constant;
 
-public sealed class SalaryDto
-{
-    public double Amount { get; set; }
-    public string Frequency { get; set; } = null!;
-}
+namespace IncomeTax.Domain;
+
+public sealed record SalaryDto(double Amount, SalaryFrequency Frequency) : JourneyDto;
