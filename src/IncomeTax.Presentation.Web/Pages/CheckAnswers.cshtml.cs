@@ -1,4 +1,4 @@
-﻿using IncomeTax.Application;
+﻿using IncomeTax.Application.Journey.Query;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -9,10 +9,10 @@ public class CheckAnswers : PageModel
     public string GrossIncome { get; private set; } = null!;
     public string OverStatePensionAge { get; private set; } = null!;
     
-    public IActionResult OnGet([FromServices] UserService userService)
+    public IActionResult OnGet([FromServices] JourneyQueries journey)
     {
-        GrossIncome = userService.GetGrossIncome();
-        OverStatePensionAge = userService.GetIsOverStatePensionAge();
+        GrossIncome = journey.GetGrossIncome();
+        OverStatePensionAge = journey.GetIsOverStatePensionAge();
         
         return Page();
     }

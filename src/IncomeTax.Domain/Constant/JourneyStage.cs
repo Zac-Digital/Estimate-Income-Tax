@@ -1,6 +1,6 @@
 ﻿namespace IncomeTax.Domain.Constant;
 
-public enum Journey
+public enum JourneyStage
 {
     Salary,
     StatePension

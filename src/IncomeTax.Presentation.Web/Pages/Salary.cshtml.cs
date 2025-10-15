@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using IncomeTax.Application;
+using IncomeTax.Application.Journey.Command;
 using IncomeTax.Domain.Constant;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -25,7 +25,7 @@ public class Salary : PageModel
 
     public bool ErrorFrequencyIsNotGiven { get; private set; }
 
-    public IActionResult OnPost([FromServices] UserService userService)
+    public IActionResult OnPost([FromServices] JourneyCommands journey)
     {
         if (!ModelState.IsValid)
         {
@@ -45,7 +45,7 @@ public class Salary : PageModel
             return Page();
         }
 
-        userService.UpdateSalary(Amount!.Value, Frequency);
+        journey.UpdateSalary(Amount!.Value, Frequency);
 
         return RedirectToPage("./StatePension");
     }

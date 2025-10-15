@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using IncomeTax.Application;
+using IncomeTax.Application.Journey.Command;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -11,14 +11,14 @@ public class StatePension : PageModel
     [Required]
     public bool? IsOverStatePensionAge { get; set; }
 
-    public IActionResult OnPost([FromServices] UserService userService)
+    public IActionResult OnPost([FromServices] JourneyCommands journey)
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
         
-        userService.UpdateStatePension(IsOverStatePensionAge!.Value);
+        journey.UpdateStatePension(IsOverStatePensionAge!.Value);
 
         return RedirectToPage("./CheckAnswers");
     }

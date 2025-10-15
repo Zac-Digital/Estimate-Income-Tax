@@ -1,4 +1,6 @@
-using IncomeTax.Application;
+using IncomeTax.Application.Journey.Command;
+using IncomeTax.Application.Journey.Query;
+using IncomeTax.Application.Session;
 
 namespace IncomeTax.Presentation.Web;
 
@@ -19,7 +21,9 @@ public static class Program
             options.Cookie.IsEssential = true;
         });
         
-        builder.Services.AddTransient<UserService>();
+        builder.Services.AddTransient<SessionService>();
+        builder.Services.AddTransient<JourneyCommands>();
+        builder.Services.AddTransient<JourneyQueries>();
 
         WebApplication app = builder.Build();
 
