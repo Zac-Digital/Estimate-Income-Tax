@@ -1,0 +1,47 @@
+﻿@page "/scottish-tax"
+@model IncomeTax.Presentation.Web.Pages.ScottishTax
+@{
+    ViewData["Title"] = "Scottish Tax";
+}
+
+<form method="post">
+    <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                <h1 class="govuk-fieldset__heading">
+                    Do you pay the Scottish Income Tax? (Optional)
+                </h1>
+            </legend>
+            <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="scottish-tax__yes" data-testid="scottish-tax__yes"
+                           type="radio" asp-for="IsPayingScottishTax" value="true">
+                    <label class="govuk-label govuk-radios__label" for="scottish-tax__yes">
+                        Yes
+                    </label>
+                </div>
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="scottish-tax__no" data-testid="scottish-tax__no"
+                           type="radio" asp-for="IsPayingScottishTax" value="false">
+                    <label class="govuk-label govuk-radios__label" for="scottish-tax__no">
+                        No
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <details class="govuk-details" data-testid="scottish-tax__details-summary">
+        <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+                Check if you pay Scottish Income Tax
+            </span>
+        </summary>
+        <div class="govuk-details__text">
+            Sed a rhoncus velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
+            Quisque porttitor mauris et quam malesuada, sed cursus orci congue.
+        </div>
+    </details>
+    <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+    </button>
+</form>

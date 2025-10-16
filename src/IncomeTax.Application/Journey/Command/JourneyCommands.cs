@@ -15,4 +15,7 @@ public sealed class JourneyCommands
 
     public void UpdateStatePension(bool isOverStatePensionAge) =>
         _sessionService.Serialise(JourneyStage.StatePension, new StatePensionDto(isOverStatePensionAge));
+
+    public void UpdateScottishTax(bool? isPayingScottishTax) =>
+        _sessionService.Serialise(JourneyStage.ScottishTax, new ScottishTaxDto(isPayingScottishTax));
 }

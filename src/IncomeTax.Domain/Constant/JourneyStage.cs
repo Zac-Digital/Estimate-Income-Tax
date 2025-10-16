@@ -3,5 +3,6 @@
 public enum JourneyStage
 {
     Salary,
-    StatePension
+    StatePension,
+    ScottishTax
 }

@@ -20,9 +20,10 @@ public sealed class SessionService
         _accessor.HttpContext.Session.Set(journeyStage.ToString(), journeyBytes);
     }
 
-    public T Deserialise<T>(JourneyStage journeyStage) where T : JourneyDto
+    public T? Deserialise<T>(JourneyStage journeyStage) where T : JourneyDto
     {
-        _accessor.HttpContext.Session.TryGetValue(journeyStage.ToString(), out byte[] journeyBytes);
+        bool hasValue = _accessor.HttpContext.Session.TryGetValue(journeyStage.ToString(), out byte[] journeyBytes);
+        if (!hasValue) return null;
         string journeyJson = Encoding.UTF8.GetString(journeyBytes);
         return JsonSerializer.Deserialize<T>(journeyJson, JsonSerializerOptions)!;
     }
