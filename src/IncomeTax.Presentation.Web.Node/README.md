@@ -10,8 +10,7 @@ In a terminal..
 
 ### Prerequisites
 
-1. Node.JS v22.16.0 or Later
-2. NPM v10.9.2 or Later
+1. Node.js "Krypton" LTS or Later
 
 ### Running
 
