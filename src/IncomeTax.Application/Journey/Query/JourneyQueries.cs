@@ -24,12 +24,6 @@ public sealed class JourneyQueries
     public string GetIsOverStatePensionAge() =>
         _sessionService.Deserialise<StatePensionDto>(JourneyStage.StatePension)!.IsOverStatePensionAge ? "Yes" : "No";
 
-    public string? GetIsPayingScottishTax()
-    {
-        bool? isPayingScottishTax =
-            _sessionService.Deserialise<ScottishTaxDto>(JourneyStage.ScottishTax)?.IsPayingScottishTax;
-
-        if (isPayingScottishTax is null) return null;
-        return isPayingScottishTax.Value ? "Yes" : "No";
-    }
+    public bool? GetIsPayingScottishTax() => 
+        _sessionService.Deserialise<ScottishTaxDto>(JourneyStage.ScottishTax)?.IsPayingScottishTax;
 }

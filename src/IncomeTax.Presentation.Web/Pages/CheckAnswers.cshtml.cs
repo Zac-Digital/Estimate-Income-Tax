@@ -14,8 +14,14 @@ public class CheckAnswers : PageModel
     {
         GrossIncome = journey.GetGrossIncome();
         OverStatePensionAge = journey.GetIsOverStatePensionAge();
-        PayingScottishTax = journey.GetIsPayingScottishTax();
+        PayingScottishTax = ParseIsPayingScottishTax(journey.GetIsPayingScottishTax());
         
         return Page();
+    }
+
+    private string ParseIsPayingScottishTax(bool? isPayingScottishTax)
+    {
+        if (isPayingScottishTax is null) return "Not provided";
+        return isPayingScottishTax.Value ? "Yes" : "No";
     }
 }

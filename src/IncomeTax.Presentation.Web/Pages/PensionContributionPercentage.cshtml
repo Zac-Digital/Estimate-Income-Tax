@@ -1,0 +1,31 @@
+@page "/pension-contribution-percentage"
+@model IncomeTax.Presentation.Web.Pages.PensionContributionPercentage
+@{
+    ViewData["Title"] = "Pension Contribution Percentage";
+}
+
+<form method="post">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">How much are your monthly pension contributions?
+        (Optional)</h1>
+    <p class="govuk-body">Enter this as a percentage of your income. Do not include any contributions from your
+        employer.</p>
+    <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+            <label class="govuk-label govuk-label--l" for="pension-contribution-percentage__input">
+                Percentage amount
+            </label>
+        </h1>
+        <div id="pension-contribution-percentage__input_hint" class="govuk-hint">
+            For example, 5% or 6.23%
+        </div>
+        <div class="govuk-input__wrapper">
+            <input class="govuk-input govuk-input--width-5" id="pension-contribution-percentage__input" type="text"
+                   spellcheck="false" aria-describedby="pension-contribution-percentage__input_hint">
+            <div class="govuk-input__suffix" aria-hidden="true">%</div>
+        </div>
+    </div>
+    <a href="/pension-contribution-fixed" class="govuk-link">You can tell us the amount in pounds if you prefer.</a>
+    <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+    </button>
+</form>
