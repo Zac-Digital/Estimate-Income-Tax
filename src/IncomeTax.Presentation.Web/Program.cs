@@ -12,7 +12,6 @@ public static class Program
 
         builder.Services.AddRazorPages();
 
-        builder.Services.AddDistributedMemoryCache(); // TODO: Look at Redis later
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddSession(options =>
         {

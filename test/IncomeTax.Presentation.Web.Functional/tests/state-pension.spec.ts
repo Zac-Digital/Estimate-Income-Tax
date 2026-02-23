@@ -33,6 +33,11 @@ test.describe('State Pension Page', () => {
     });
 
     test('continue button navigates to next page', async ({page}) => {
+        await page.goto('/salary');
+        await page.getByTestId('salary__text-input__amount').fill('32768.64');
+        await page.getByTestId('salary__radio-set__frequency_Yearly').click();
+        await page.getByRole('button').click();
+        await page.waitForURL('**/state-pension')
         await page.getByTestId('state-pension__no').click();
         await page.getByRole('button').click();
         expect(page.url()).toContain('/check-answers');
