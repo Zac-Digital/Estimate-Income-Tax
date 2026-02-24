@@ -14,6 +14,5 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /src
 COPY --from=build /src/out .
 EXPOSE 8080
-EXPOSE 8081
 ENTRYPOINT ["dotnet", "IncomeTax.Presentation.Web.dll"]
 # -- Runtime -- #
