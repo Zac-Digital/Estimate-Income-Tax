@@ -2,7 +2,7 @@ name: Functional Testing
 
 on:
   workflow_dispatch:
-  push: 
+  push:
     paths:
       - 'src/IncomeTax.Presentation.Web/**'
       - 'test/IncomeTax.Presentation.Web.Functional/**'
@@ -14,30 +14,40 @@ concurrency:
 
 jobs:
   build-and-test:
+    name: Build & Run Functional Test Suite
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
         with:
           ref: ${{ github.ref }}
-      
+
       - name: Setup Node.JS
         uses: actions/setup-node@v6
-        with: 
-          node-version: "lts/Krypton"
-          
+        with:
+          node-version: 'lts/Krypton'
+
       - name: Run Web Application
         shell: bash
         run: docker compose up -d
-        
+
       - name: Install Playwright
         working-directory: ./test/IncomeTax.Presentation.Web.Functional
         shell: bash
         run: |
           npm i
           npx playwright install --with-deps
-          
+
       - name: Run Functional Testing
         working-directory: ./test/IncomeTax.Presentation.Web.Functional
         shell: bash
         run: npx playwright test --workers `nproc`
+
+      - name: Upload Report
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: 'Playwright Report'
+          path: './test/IncomeTax.Presentation.Web.Functional/playwright-report'
+          compression-level: '9'
+          if-no-files-found: 'ignore'
