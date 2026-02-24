@@ -8,7 +8,9 @@ export default defineConfig({
     reporter: 'html',
 
     use: {
-        baseURL: 'https://localhost:7234',
+        baseURL: 'https://localhost:8443',
+        ignoreHTTPSErrors: true,
+        
         screenshot: 'only-on-failure',
         video: 'on-first-retry',
         trace: 'on-first-retry'
