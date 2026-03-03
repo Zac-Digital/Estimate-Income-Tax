@@ -1,3 +1,7 @@
+using IncomeTax.Application.Journey.Command;
+using IncomeTax.Application.Journey.Query;
+using IncomeTax.Application.Session;
+
 namespace IncomeTax.Presentation.Web;
 
 public static class Program
@@ -7,6 +11,18 @@ public static class Program
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddRazorPages();
+
+        builder.Services.AddHttpContextAccessor();
+        builder.Services.AddSession(options =>
+        {
+            options.IdleTimeout = TimeSpan.FromMinutes(10);
+            options.Cookie.HttpOnly = true;
+            options.Cookie.IsEssential = true;
+        });
+        
+        builder.Services.AddTransient<SessionService>();
+        builder.Services.AddTransient<JourneyCommands>();
+        builder.Services.AddTransient<JourneyQueries>();
 
         WebApplication app = builder.Build();
 
@@ -20,6 +36,7 @@ public static class Program
         app.UseHttpsRedirection();
 
         app.UseRouting();
+        app.UseSession();
         app.MapStaticAssets();
         app.MapRazorPages().WithStaticAssets();
 

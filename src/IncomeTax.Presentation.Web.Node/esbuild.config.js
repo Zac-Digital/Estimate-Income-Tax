@@ -29,7 +29,7 @@ await esbuild.build({
 
 // -- Copy GOV.UK Assets --
 const assetDirectoryGovUk = "./node_modules/govuk-frontend/dist/govuk/assets/";
-const subFoldersGovUk = ["images", "fonts", "rebrand"];
+const subFoldersGovUk = ["fonts", "images"];
 
 for (const subFolder of subFoldersGovUk) {
     const targetDirectory = assetDirectoryGovUk + subFolder;

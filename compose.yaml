@@ -1,0 +1,22 @@
+services:
+  estimate-income-tax:
+    container_name: Estimate-Income-Tax
+    image: estimate-income-tax:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: no
+    expose:
+      - "8080"
+  
+  ingress:
+    container_name: Estimate-Income-Tax-Ingress
+    image: nginx:latest
+    ports:
+      - "8443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./certs:/etc/nginx/certs
+    restart: no
+    depends_on:
+      - estimate-income-tax

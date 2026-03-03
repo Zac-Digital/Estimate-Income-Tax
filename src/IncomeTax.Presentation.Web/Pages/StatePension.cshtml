@@ -1,0 +1,70 @@
+﻿@page "/state-pension"
+@model IncomeTax.Presentation.Web.Pages.StatePension
+@{
+    ViewData["Title"] = "State Pension";
+}
+
+<form method="post">
+    @if (!Model.ModelState.IsValid)
+    {
+        <div class="govuk-error-summary" data-testid="state-pension__error-summary__error" data-module="govuk-error-summary">
+            <div role="alert">
+                There is a problem
+                <div class="govuk-error-summary__body">
+                    <ul class="govuk-list govuk-error-summary__list">
+                        <li>
+                            <a href="#state-pension__yes" data-testid="state-pension__error-summary__error__no-selection">Select yes
+                                if you are over the State Pension age</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="govuk-form-group@(!Model.ModelState.IsValid ? " govuk-form-group--error" : "")">
+        <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                <h1 class="govuk-fieldset__heading">
+                    Are you over the State Pension age?
+                </h1>
+            </legend>
+            @if (!Model.ModelState.IsValid)
+            {
+                <p id="state-pension__error" data-testid="state-pension__error" class="govuk-error-message">
+                    <span class="govuk-visually-hidden">Error:</span> Select yes if you are over the State Pension age
+                </p>
+            }
+            <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="state-pension__yes" data-testid="state-pension__yes"
+                           type="radio" asp-for="IsOverStatePensionAge" value="true">
+                    <label class="govuk-label govuk-radios__label" for="state-pension__yes">
+                        Yes
+                    </label>
+                </div>
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="state-pension__no" data-testid="state-pension__no"
+                           type="radio" asp-for="IsOverStatePensionAge" value="false">
+                    <label class="govuk-label govuk-radios__label" for="state-pension__no">
+                        No
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <details class="govuk-details" data-testid="state-pension__details-summary">
+        <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+                Why we ask this
+            </span>
+        </summary>
+        <div class="govuk-details__text">
+            Sed a rhoncus velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
+            Quisque porttitor mauris et quam malesuada, sed cursus orci congue.
+        </div>
+    </details>
+    <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+    </button>
+</form>

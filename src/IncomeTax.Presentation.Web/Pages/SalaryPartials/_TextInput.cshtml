@@ -1,0 +1,26 @@
+﻿@model Salary
+
+<div class="govuk-form-group@(Model.ErrorAmountIsInvalidType ? " govuk-form-group--error" : "")">
+    <h1 class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label--m" for="Amount">Gross amount, in pounds</label>
+        <div id="salary__text-input__amount-hint" data-testid="salary__text-input__amount-hint" class="govuk-hint">This is the amount you are paid before any deductions are made.
+        </div>
+    </h1>
+    @if (Model.ErrorAmountIsInvalidType)
+    {
+        <p id="salary__text-input__error__amount" data-testid="salary__text-input__error__amount-invalid-type" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> Enter the amount you are paid
+        </p>
+    }
+    @if (Model.ErrorAmountIsNotTwoDecimalPlaces)
+    {
+        <p id="salary__text-input__error__amount" data-testid="salary__text-input__error__amount-decimal" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> Enter the amount you are paid in the correct format, for example £512 or £128.64
+        </p>
+    }
+    <div class="govuk-input__wrapper">
+        <div class="govuk-input__prefix" aria-hidden="true">£</div>
+        <input class="govuk-input govuk-input--width-5" id="salary__text-input__amount" data-testid="salary__text-input__amount" asp-for="Amount" type="text" spellcheck="false"
+               aria-describedby="salary__text-input__error__amount">
+    </div>
+</div>

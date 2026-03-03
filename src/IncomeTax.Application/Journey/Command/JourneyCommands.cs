@@ -1,0 +1,31 @@
+using IncomeTax.Application.Session;
+using IncomeTax.Domain;
+using IncomeTax.Domain.Constant;
+
+namespace IncomeTax.Application.Journey.Command;
+
+public sealed class JourneyCommands
+{
+    private readonly SessionService _sessionService;
+
+    public JourneyCommands(SessionService sessionService)
+    {
+        _sessionService = sessionService;
+    }
+
+    public void UpdateSalary(double amount, string frequency) => _sessionService.Serialise(JourneyStage.Salary,
+        new SalaryDto(amount, SalaryFrequencyExtensions.SalaryPageRadioOptionToEnum[frequency]));
+
+    public void UpdateStatePension(bool isOverStatePensionAge) =>
+        _sessionService.Serialise(JourneyStage.StatePension, new StatePensionDto(isOverStatePensionAge));
+
+    public void UpdateScottishTax(bool? isPayingScottishTax) =>
+        _sessionService.Serialise(JourneyStage.ScottishTax, new ScottishTaxDto(isPayingScottishTax));
+
+    public void UpdatePensionContribution(string? pensionContribution, PensionDescriptor descriptor) =>
+        _sessionService.Serialise(JourneyStage.PensionContribution,
+            new PensionContributionDto(pensionContribution, descriptor));
+    
+    public void DeletePensionContribution() => 
+        _sessionService.RemoveJourneyStage(JourneyStage.PensionContribution);
+}

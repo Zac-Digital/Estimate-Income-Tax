@@ -1,0 +1,27 @@
+﻿@model Salary
+
+<div class="govuk-form-group@(Model.ErrorFrequencyIsNotGiven ? " govuk-form-group--error" : "")">
+    <fieldset class="govuk-fieldset" aria-describedby="salary__radio-set__error__frequency">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h1 class="govuk-fieldset__heading">How often are you paid this amount?</h1>
+        </legend>
+        @if (Model.ErrorFrequencyIsNotGiven)
+        {
+            <p id="salary__radio-set__error__frequency" data-testid="salary__radio-set__error__frequency" class="govuk-error-message">
+                <span class="govuk-visually-hidden">Error:</span> Select how often you are paid this amount
+            </p>
+        }
+        <div class="govuk-radios" data-module="govuk-radios">
+            @foreach (string option in Model.Options)
+            {
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="salary__radio-set__frequency_@option" data-testid="salary__radio-set__frequency_@option" asp-for="Frequency" type="radio"
+                           value="@option">
+                    <label class="govuk-label govuk-radios__label" for="salary__radio-set__frequency_@option">
+                        @option
+                    </label>
+                </div>
+            }
+        </div>
+    </fieldset>
+</div>
