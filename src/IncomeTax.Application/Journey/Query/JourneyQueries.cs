@@ -26,4 +26,20 @@ public sealed class JourneyQueries
 
     public bool? GetIsPayingScottishTax() => 
         _sessionService.Deserialise<ScottishTaxDto>(JourneyStage.ScottishTax)?.IsPayingScottishTax;
+
+    public string? GetPensionContributionDescriptor()
+    {
+        PensionDescriptor? pensionDescriptor =
+            _sessionService.Deserialise<PensionContributionDto>(JourneyStage.PensionContribution)?.Descriptor;
+        return pensionDescriptor switch
+        {
+            PensionDescriptor.Percentage => "%",
+            PensionDescriptor.Pound => "£",
+            null => null,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+    
+    public string? GetPensionContribution() =>
+        _sessionService.Deserialise<PensionContributionDto>(JourneyStage.PensionContribution)?.PensionContribution;
 }

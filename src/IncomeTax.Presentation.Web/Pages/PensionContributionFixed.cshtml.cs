@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IncomeTax.Presentation.Web.Pages;
 
-public class PensionContributionPercentage : PageModel
+public class PensionContributionFixed : PageModel
 {
     [BindProperty]
     public string? PensionContribution { get; set; }
@@ -15,7 +15,7 @@ public class PensionContributionPercentage : PageModel
     {
         PensionContribution = journey.GetPensionContribution();
     }
-
+    
     public void OnGetSwap([FromServices] JourneyCommands journey)
     {
         journey.DeletePensionContribution();
@@ -29,7 +29,7 @@ public class PensionContributionPercentage : PageModel
         }
         else
         {
-            journey.UpdatePensionContribution(PensionContribution, PensionDescriptor.Percentage);
+            journey.UpdatePensionContribution(PensionContribution, PensionDescriptor.Pound);
         }
         
         return RedirectToPage("./CheckAnswers");

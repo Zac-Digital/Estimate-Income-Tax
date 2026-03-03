@@ -27,4 +27,7 @@ public sealed class SessionService
         string journeyJson = Encoding.UTF8.GetString(journeyBytes);
         return JsonSerializer.Deserialize<T>(journeyJson, JsonSerializerOptions)!;
     }
+
+    public void RemoveJourneyStage(JourneyStage journeyStage) =>
+        _accessor.HttpContext.Session.Remove(journeyStage.ToString());
 }

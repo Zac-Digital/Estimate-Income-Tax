@@ -8,7 +8,10 @@ public sealed class JourneyCommands
 {
     private readonly SessionService _sessionService;
 
-    public JourneyCommands(SessionService sessionService) { _sessionService = sessionService; }
+    public JourneyCommands(SessionService sessionService)
+    {
+        _sessionService = sessionService;
+    }
 
     public void UpdateSalary(double amount, string frequency) => _sessionService.Serialise(JourneyStage.Salary,
         new SalaryDto(amount, SalaryFrequencyExtensions.SalaryPageRadioOptionToEnum[frequency]));
@@ -18,4 +21,11 @@ public sealed class JourneyCommands
 
     public void UpdateScottishTax(bool? isPayingScottishTax) =>
         _sessionService.Serialise(JourneyStage.ScottishTax, new ScottishTaxDto(isPayingScottishTax));
+
+    public void UpdatePensionContribution(string? pensionContribution, PensionDescriptor descriptor) =>
+        _sessionService.Serialise(JourneyStage.PensionContribution,
+            new PensionContributionDto(pensionContribution, descriptor));
+    
+    public void DeletePensionContribution() => 
+        _sessionService.RemoveJourneyStage(JourneyStage.PensionContribution);
 }

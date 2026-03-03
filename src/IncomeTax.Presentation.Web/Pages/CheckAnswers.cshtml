@@ -49,10 +49,11 @@
                 Scottish Income Tax
             </dt>
             <dd class="govuk-summary-list__value">
-                @Model.PayingScottishTax
+                @(Model.PayingScottishTax ?? CheckAnswers.NotProvided)
             </dd>
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/scottish-tax">@(Model.PayingScottishTax is null ? "Add" : "Change")<span class="govuk-visually-hidden"> scottish income tax</span></a>
+                <a class="govuk-link" href="/scottish-tax">@(Model.PayingScottishTax is null ? "Add" : "Change")<span
+                        class="govuk-visually-hidden"> scottish income tax</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row">
@@ -60,10 +61,12 @@
                 Pension contributions
             </dt>
             <dd class="govuk-summary-list__value">
-                Placeholder
+                @(Model.PensionContribution is null ? CheckAnswers.NotProvided : Model.PensionContribution + " a month")
             </dd>
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="#">Add<span class="govuk-visually-hidden"> pension contributions</span></a>
+                <a class="govuk-link"
+                   href="/pension-contribution-@(Model.PensionContributionDescriptor is null or "%" ? "percentage" : "fixed")">@(Model.PensionContribution is null ? "Add" : "Change")<span
+                        class="govuk-visually-hidden"> pension contributions</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row">

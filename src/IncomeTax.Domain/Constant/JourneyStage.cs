@@ -4,5 +4,7 @@ public enum JourneyStage
 {
     Salary,
     StatePension,
-    ScottishTax
+    
+    ScottishTax,
+    PensionContribution
 }
