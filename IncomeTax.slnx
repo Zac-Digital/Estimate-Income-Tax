@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/IncomeTax.Application/IncomeTax.Application.csproj" />
+    <Project Path="src/IncomeTax.Domain/IncomeTax.Domain.csproj" />
+    <Project Path="src/IncomeTax.Presentation.Web/IncomeTax.Presentation.Web.csproj" />
+  </Folder>
+</Solution>
