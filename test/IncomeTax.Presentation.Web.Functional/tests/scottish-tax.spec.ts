@@ -1,4 +1,5 @@
 import {test, expect} from '@playwright/test';
+import AxeBuilder from "@axe-core/playwright";
 
 test.describe('Scottish Tax Page', () => {
     test.beforeEach(async ({page}) => {
@@ -45,5 +46,18 @@ test.describe('Scottish Tax Page', () => {
         await page.getByTestId('scottish-tax__no').click();
         await page.getByRole('button').click();
         expect(page.url()).toContain('/check-answers');
+    });
+
+    test('passes accessibility checks', async ({page}, testInfo) => {
+        const analysis = await new AxeBuilder({ page })
+            .withTags(['wcag22aa', 'wcag21aa', 'wcag2aa', 'best-practice'])
+            .analyze();
+
+        await testInfo.attach('Accessibility', {
+            body: JSON.stringify(analysis, null, 2),
+            contentType: 'application/json'
+        });
+
+        expect(analysis.violations).toEqual([]);
     });
 });

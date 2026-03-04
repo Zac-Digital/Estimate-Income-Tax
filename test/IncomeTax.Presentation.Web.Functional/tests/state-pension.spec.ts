@@ -1,4 +1,5 @@
 ﻿import {test, expect} from '@playwright/test';
+import AxeBuilder from "@axe-core/playwright";
 
 test.describe('State Pension Page', () => {
     test.beforeEach(async ({page}) => {
@@ -42,6 +43,19 @@ test.describe('State Pension Page', () => {
         await page.getByRole('button').click();
         expect(page.url()).toContain('/check-answers');
     });
+
+    test('passes accessibility checks', async ({page}, testInfo) => {
+        const analysis = await new AxeBuilder({ page })
+            .withTags(['wcag22aa', 'wcag21aa', 'wcag2aa', 'best-practice'])
+            .analyze();
+
+        await testInfo.attach('Accessibility', {
+            body: JSON.stringify(analysis, null, 2),
+            contentType: 'application/json'
+        });
+
+        expect(analysis.violations).toEqual([]);
+    });
 });
 
 test.describe('State Pension Page - Error State', () => {
@@ -60,5 +74,20 @@ test.describe('State Pension Page - Error State', () => {
         await expect(page.getByTestId('state-pension__error-summary__error')).toBeVisible();
         await expect(page.getByTestId('state-pension__error-summary__error__no-selection')).toBeVisible();
         await expect(page.getByTestId('state-pension__error')).toBeVisible();
+    });
+
+    test('passes accessibility checks', async ({page}, testInfo) => {
+        await page.getByRole('button').click();
+        
+        const analysis = await new AxeBuilder({ page })
+            .withTags(['wcag22aa', 'wcag21aa', 'wcag2aa', 'best-practice'])
+            .analyze();
+
+        await testInfo.attach('Accessibility', {
+            body: JSON.stringify(analysis, null, 2),
+            contentType: 'application/json'
+        });
+
+        expect(analysis.violations).toEqual([]);
     });
 });

@@ -1,4 +1,5 @@
 ﻿import {test, expect} from '@playwright/test';
+import AxeBuilder from "@axe-core/playwright";
 
 test.describe('Salary Page', () => {
     test.beforeEach(async ({page}) => {
@@ -43,6 +44,20 @@ test.describe('Salary Page', () => {
         await page.getByTestId('salary__radio-set__frequency_Yearly').click();
         await page.getByRole('button').click();
         expect(page.url()).toContain('/state-pension');
+    });
+
+
+    test('passes accessibility checks', async ({page}, testInfo) => {
+        const analysis = await new AxeBuilder({ page })
+            .withTags(['wcag22aa', 'wcag21aa', 'wcag2aa', 'best-practice'])
+            .analyze();
+
+        await testInfo.attach('Accessibility', {
+            body: JSON.stringify(analysis, null, 2),
+            contentType: 'application/json'
+        });
+
+        expect(analysis.violations).toEqual([]);
     });
 });
 
@@ -110,5 +125,20 @@ test.describe('Salary Page - Error State', () => {
         await (expect(page.getByTestId('salary__error-summary__error__amount-decimal'))).not.toBeVisible();
         await (expect(page.getByTestId('salary__text-input__error__amount-invalid-type'))).toBeVisible();
         await (expect(page.getByTestId('salary__text-input__error__amount-decimal'))).not.toBeVisible();
+    });
+
+    test('passes accessibility checks', async ({page}, testInfo) => {
+        await page.getByRole('button').click();
+        
+        const analysis = await new AxeBuilder({ page })
+            .withTags(['wcag22aa', 'wcag21aa', 'wcag2aa', 'best-practice'])
+            .analyze();
+
+        await testInfo.attach('Accessibility', {
+            body: JSON.stringify(analysis, null, 2),
+            contentType: 'application/json'
+        });
+
+        expect(analysis.violations).toEqual([]);
     });
 });
