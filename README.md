@@ -1,5 +1,7 @@
 # Estimate Income Tax
 
+[![Functional Testing](https://github.com/Zac-Digital/Estimate-Income-Tax/actions/workflows/functional-testing.yml/badge.svg?branch=master)](https://github.com/Zac-Digital/Estimate-Income-Tax/actions/workflows/functional-testing.yml)
+
 This codebase is a faithful recreation of the [Estimate Income Tax GOV.UK Service](https://www.gov.uk/estimate-income-tax).
 
 The purpose of this web application is for me to consolidate my skills and serves as a reference for myself on how to consistently develop certain things, e.g., a .NET web app with a clean architecture, Playwright E2E tests, Dockerfiles and whatever else.
