@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IncomeTax.Presentation.Web.Pages;
 
-public class StatePension : PageModel
+public sealed class StatePension : PageModel
 {
     [BindProperty]
     [Required]

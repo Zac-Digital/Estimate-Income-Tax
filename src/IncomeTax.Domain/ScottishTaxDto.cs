@@ -1,3 +1,3 @@
 ﻿namespace IncomeTax.Domain;
 
-public record ScottishTaxDto(bool? IsPayingScottishTax) : JourneyDto;
+public sealed record ScottishTaxDto(bool? IsPayingScottishTax) : JourneyDto;

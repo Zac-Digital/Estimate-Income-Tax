@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IncomeTax.Presentation.Web.Pages;
 
-public class PensionContributionFixed : PageModel
+public sealed class PensionContributionFixed : PageModel
 {
     [BindProperty]
     public string? PensionContribution { get; set; }

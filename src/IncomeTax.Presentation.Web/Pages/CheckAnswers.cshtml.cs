@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IncomeTax.Presentation.Web.Pages;
 
-public class CheckAnswers : PageModel
+public sealed class CheckAnswers : PageModel
 {
     public const string NotProvided = "Not provided";
     

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IncomeTax.Presentation.Web.Pages;
 
-public class Salary : PageModel
+public sealed class Salary : PageModel
 {
     public readonly string[] Options = SalaryFrequencyExtensions.SalaryPageRadioSet;
 

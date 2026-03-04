@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IncomeTax.Presentation.Web.Pages;
 
-public class ScottishTax : PageModel
+public sealed class ScottishTax : PageModel
 {
     [BindProperty]
     public bool? IsPayingScottishTax { get; set; }
