@@ -1,10 +1,6 @@
-using System;
 using IncomeTax.Application.Journey.Command;
 using IncomeTax.Application.Journey.Query;
 using IncomeTax.Application.Session;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace IncomeTax.Presentation.Web;
 
