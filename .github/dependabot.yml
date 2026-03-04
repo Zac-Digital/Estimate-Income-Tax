@@ -19,7 +19,9 @@ updates:
           - "*"
 
   - package-ecosystem: "npm"
-    directory: "/"
+    directories:
+      - "src/IncomeTax.Presentation.Web.Node"
+      - "test/IncomeTax.Presentation.Web.Functional"
     schedule:
       interval: "daily"
     groups:
