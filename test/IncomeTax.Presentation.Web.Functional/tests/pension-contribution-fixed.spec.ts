@@ -1,4 +1,5 @@
 import {test, expect} from '@playwright/test';
+import AxeBuilder from "@axe-core/playwright";
 
 test.describe('Pension Contribution Fixed Page', () => {
     test.beforeEach(async ({page}) => {
@@ -60,5 +61,18 @@ test.describe('Pension Contribution Fixed Page', () => {
         await page.getByTestId('pension-contribution__input').fill('8');
         await page.getByRole('button').click();
         expect(page.url()).toContain('/check-answers');
+    });
+
+    test('passes accessibility checks', async ({page}, testInfo) => {
+        const analysis = await new AxeBuilder({ page })
+            .withTags(['wcag22aa', 'wcag21aa', 'wcag2aa', 'best-practice'])
+            .analyze();
+
+        await testInfo.attach('Accessibility', {
+            body: JSON.stringify(analysis, null, 2),
+            contentType: 'application/json'
+        });
+
+        expect(analysis.violations).toEqual([]);
     });
 });
