@@ -1,0 +1,15 @@
+{
+  "stryker-config": {
+    "reporters": [
+      "progress",
+      "markdown",
+      "html"
+    ],
+    "mutation-level": "Complete",
+    "thresholds": {
+      "high": 80,
+      "low": 60,
+      "break": 40
+    }
+  }
+}
