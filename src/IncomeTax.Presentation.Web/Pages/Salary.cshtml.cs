@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using IncomeTax.Application.Journey.Command;
 using IncomeTax.Domain.Constant;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IncomeTax.Presentation.Web.Pages;
 
-public class Salary : PageModel
+[ExcludeFromCodeCoverage(Justification = "OnPost Logic is Tested by Functional Test Suite")]
+public sealed class Salary : PageModel
 {
     public readonly string[] Options = SalaryFrequencyExtensions.SalaryPageRadioSet;
 

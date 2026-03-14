@@ -4,4 +4,7 @@
     <Project Path="src/IncomeTax.Domain/IncomeTax.Domain.csproj" />
     <Project Path="src/IncomeTax.Presentation.Web/IncomeTax.Presentation.Web.csproj" />
   </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/IncomeTax.Application.Test.Integration/IncomeTax.Application.Test.Integration.csproj" />
+  </Folder>
 </Solution>

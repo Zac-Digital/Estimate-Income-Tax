@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using IncomeTax.Application.Journey.Command;
 using IncomeTax.Application.Journey.Query;
 using IncomeTax.Domain.Constant;
@@ -6,7 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IncomeTax.Presentation.Web.Pages;
 
-public class PensionContributionFixed : PageModel
+[ExcludeFromCodeCoverage(Justification = "OnGet/OnGetSwap/OnPost Logic is Tested by Functional Test Suite")]
+public sealed class PensionContributionFixed : PageModel
 {
     [BindProperty]
     public string? PensionContribution { get; set; }

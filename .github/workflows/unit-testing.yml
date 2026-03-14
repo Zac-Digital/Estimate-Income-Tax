@@ -1,0 +1,46 @@
+name: Unit Testing
+
+on:
+  pull_request:
+    paths: &push_paths
+      - 'src/**'
+      - '!src/IncomeTax.Presentation.Web.Node/**'
+      - 'test/**'
+      - '!test/IncomeTax.Presentation.Web.Functional/**'
+      - '.github/workflows/unit-testing.yml'
+  push:
+    paths: *push_paths
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+  
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  build-and-test:
+    name: Build & Test Solution
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup .NET
+        uses: ./.github/actions/setup-dotnet
+        
+      - name: .NET Test
+        shell: bash
+        run: dotnet test --no-build --no-restore --configuration Release --logger "trx;LogFileName=results.trx"
+        
+      - name: Upload Report
+        if: ${{ !cancelled() }}
+        uses: dorny/test-reporter@v2
+        with:
+          name: 'Test Report'
+          path: '**.trx'
+          reporter: 'dotnet-trx'
