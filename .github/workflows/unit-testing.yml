@@ -53,5 +53,5 @@ jobs:
         uses: dorny/test-reporter@v2
         with:
           name: 'Test Report'
-          path: '*.trx'
+          path: '**.trx'
           reporter: 'dotnet-trx'
