@@ -2,11 +2,13 @@ name: Functional Testing
 
 on:
   workflow_dispatch:
-  push:
-    paths:
+  pull_request:
+    paths: &push_paths
       - 'src/IncomeTax.Presentation.Web/**'
       - 'test/IncomeTax.Presentation.Web.Functional/**'
       - '.github/workflows/functional-testing.yml'
+  push:
+    paths: *push_paths
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
