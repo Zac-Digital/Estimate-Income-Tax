@@ -1,6 +1,8 @@
 # Estimate Income Tax
 
 [![Functional Testing](https://github.com/Zac-Digital/Estimate-Income-Tax/actions/workflows/functional-testing.yml/badge.svg?branch=master)](https://github.com/Zac-Digital/Estimate-Income-Tax/actions/workflows/functional-testing.yml)
+[![Mutation Testing](https://github.com/Zac-Digital/Estimate-Income-Tax/actions/workflows/stryker-mutator.yml/badge.svg?branch=master)](https://github.com/Zac-Digital/Estimate-Income-Tax/actions/workflows/stryker-mutator.yml)
+[![Unit Testing](https://github.com/Zac-Digital/Estimate-Income-Tax/actions/workflows/unit-testing.yml/badge.svg?branch=master)](https://github.com/Zac-Digital/Estimate-Income-Tax/actions/workflows/unit-testing.yml)
 
 This codebase is a faithful recreation of the [Estimate Income Tax GOV.UK Service](https://www.gov.uk/estimate-income-tax).
 
