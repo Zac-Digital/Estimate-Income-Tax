@@ -1,0 +1,18 @@
+name: Setup .NET
+
+runs:
+  using: composite
+  steps:
+    - name: Install .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: '10.x'
+        dotnet-quality: 'ga'
+
+    - name: .NET Restore
+      shell: bash
+      run: dotnet restore
+
+    - name: .NET Build
+      shell: bash
+      run: dotnet build --no-restore --configuration Release

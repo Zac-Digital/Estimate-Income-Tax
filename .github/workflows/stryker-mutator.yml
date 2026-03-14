@@ -27,10 +27,7 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: '10.x'
-          dotnet-quality: 'ga'
+        uses: ./.github/actions/setup-dotnet
           
       - name: Install Stryker Mutator
         shell: bash
@@ -38,7 +35,7 @@ jobs:
 
       - name: Run Stryker Mutator
         shell: bash
-        run: dotnet stryker -f .github/stryker-mutator-config.json -O StrykerOutput --skip-version-check --concurrency `nproc`
+        run: dotnet stryker --configuration Release -f .github/stryker-mutator-config.json -O StrykerOutput --skip-version-check --concurrency `nproc`
         
       - name: Generate Markdown Report
         if: ${{ !cancelled() }}
