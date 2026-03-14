@@ -1,10 +1,12 @@
+using System.Diagnostics.CodeAnalysis;
 using IncomeTax.Application.Journey.Command;
 using IncomeTax.Application.Journey.Query;
 using IncomeTax.Application.Session;
 
 namespace IncomeTax.Presentation.Web;
 
-public static class Program
+[ExcludeFromCodeCoverage]
+public class Program
 {
     public static void Main(string[] args)
     {
