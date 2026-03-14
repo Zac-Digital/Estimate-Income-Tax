@@ -19,6 +19,7 @@ It uses the [GOV.UK FrontEnd](https://github.com/alphagov/govuk-frontend) and fo
     |- IncomeTax.Presentation.Web
     |- IncomeTax.Presentation.Web.Node
 |- test
+    |- IncomeTax.Application.Test.Integration
     |- IncomeTax.Presentation.Web.Functional
 ```
 
@@ -37,6 +38,7 @@ This follows a reasonable layered clean architecture approach:
 
 ### test
 
+- `IncomeTax.Application.Test.Integration` - This is where the integration tests are located.
 - `IncomeTax.Presentation.Web.Functional` - This is where the functional / E2E tests are located. Uses Playwright.
 
 ## Building & Running
@@ -65,3 +67,5 @@ To run the functional tests properly:
 - In another terminal, `cd` into `test/IncomeTax.Presentation.Web.Functional`
 - Ensure you are up to date, execute `npm i` and then `npx playwright install`
 - To run the tests, execute `npx playwright test`
+
+To run the integration tests, it's simply `dotnet test` from the root directory.
