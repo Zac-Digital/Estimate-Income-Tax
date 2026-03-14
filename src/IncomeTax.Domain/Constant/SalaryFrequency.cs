@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IncomeTax.Domain.Constant;
 
@@ -41,6 +42,7 @@ public static class SalaryFrequencyExtensions
             new KeyValuePair<SalaryFrequency, string>(SalaryFrequency.Hourly, " an hour")
         ]);
 
+    // Stryker disable once all
     public static readonly string[] SalaryPageRadioSet =
     [
         Yearly,

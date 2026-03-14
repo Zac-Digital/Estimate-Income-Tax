@@ -1,10 +1,12 @@
-﻿using System.Text;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using IncomeTax.Application.Journey.Query;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IncomeTax.Presentation.Web.Pages;
 
+[ExcludeFromCodeCoverage(Justification = "OnGet Logic is Tested by Functional Test Suite")]
 public sealed class CheckAnswers : PageModel
 {
     public const string NotProvided = "Not provided";
