@@ -10,6 +10,9 @@ on:
       - '.github/workflows/stryker-mutator.yml'
       - '.github/workflows/unit-testing.yml'
   push:
+    branches:
+      - 'main'
+      - 'development'
     paths: *push_paths
 
 concurrency:

@@ -9,6 +9,9 @@ on:
       - '!test/IncomeTax.Presentation.Web.Functional/**'
       - '.github/workflows/unit-testing.yml'
   push:
+    branches:
+      - 'main'
+      - 'development'
     paths: *push_paths
 
 concurrency:
