@@ -1,6 +1,6 @@
 ﻿import * as esbuild from "esbuild";
 import { sassPlugin } from "esbuild-sass-plugin";
-import { cpSync, readdirSync, rmSync } from "fs";
+import { cpSync, readdirSync, rmSync } from "node:fs";
 
 // -- Build CSS --
 await esbuild.build({

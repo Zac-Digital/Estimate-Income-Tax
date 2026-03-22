@@ -36,7 +36,7 @@ public sealed class JourneyQueries
             PensionDescriptor.Percentage => "%",
             PensionDescriptor.Pound => "£",
             null => null,
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(nameof(pensionDescriptor))
         };
     }
     
