@@ -3,6 +3,14 @@
 [![Functional Testing](https://github.com/Zac-Digital/Estimate-Income-Tax/actions/workflows/functional-testing.yml/badge.svg?branch=master)](https://github.com/Zac-Digital/Estimate-Income-Tax/actions/workflows/functional-testing.yml)
 [![Mutation Testing](https://github.com/Zac-Digital/Estimate-Income-Tax/actions/workflows/stryker-mutator.yml/badge.svg?branch=master)](https://github.com/Zac-Digital/Estimate-Income-Tax/actions/workflows/stryker-mutator.yml)
 [![Unit Testing](https://github.com/Zac-Digital/Estimate-Income-Tax/actions/workflows/unit-testing.yml/badge.svg?branch=master)](https://github.com/Zac-Digital/Estimate-Income-Tax/actions/workflows/unit-testing.yml)
+[![SonarQube](https://github.com/Zac-Digital/Estimate-Income-Tax/actions/workflows/sonarqube.yml/badge.svg?branch=main)](https://github.com/Zac-Digital/Estimate-Income-Tax/actions/workflows/sonarqube.yml)
+
+---
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=zac-digital_estimate-income-tax&metric=alert_status&token=5e1e0f2ab367009b48459ac021f3730c36fb713b)](https://sonarcloud.io/summary/new_code?id=zac-digital_estimate-income-tax)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=zac-digital_estimate-income-tax&metric=coverage&token=5e1e0f2ab367009b48459ac021f3730c36fb713b)](https://sonarcloud.io/summary/new_code?id=zac-digital_estimate-income-tax)
+
+---
 
 This codebase is a faithful recreation of the [Estimate Income Tax GOV.UK Service](https://www.gov.uk/estimate-income-tax).
 
