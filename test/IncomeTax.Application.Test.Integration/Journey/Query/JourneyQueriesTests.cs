@@ -80,6 +80,14 @@ public sealed class JourneyQueriesTests : CustomWebApplicationFactory
     }
 
     [Fact]
+    public void GetPensionContributionDescriptor_Throws_Exception_IfDescriptorIsInvalid()
+    {
+        _journeyCommands.UpdatePensionContribution("5", (PensionDescriptor)2);
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => _journeyQueries.GetPensionContributionDescriptor());
+    }
+
+    [Fact]
     public void GetPensionContribution_Returns_ExpectedResult()
     {
         _journeyCommands.UpdatePensionContribution("5", PensionDescriptor.Percentage);
