@@ -55,9 +55,11 @@ jobs:
           dotnet-sonarscanner begin \
           /k:"zac-digital_estimate-income-tax" \
           /o:"zac-digital" \
-          /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
+          /d:sonar.token="${{ env.SONAR_TOKEN }}" \
           /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
           /d:sonar.scanner.skipJreProvisioning=true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: .NET Restore
         shell: bash
@@ -75,4 +77,6 @@ jobs:
         shell: bash
         run: |
           dotnet-sonarscanner end \
-          /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          /d:sonar.token="${{ env.SONAR_TOKEN }}"
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

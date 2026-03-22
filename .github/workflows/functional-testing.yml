@@ -40,7 +40,7 @@ jobs:
         working-directory: ./test/IncomeTax.Presentation.Web.Functional
         shell: bash
         run: |
-          npm i
+          npm install --ignore-scripts
           npx playwright install --with-deps
 
       - name: Run Functional Testing
