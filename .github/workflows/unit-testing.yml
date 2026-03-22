@@ -15,9 +15,9 @@ on:
     paths: *push_paths
 
 concurrency:
-  group: "${{ github.workflow }}-${{ github.ref }}"
+  group: '${{ github.workflow }}-${{ github.ref }}'
   cancel-in-progress: true
-  
+
 permissions:
   contents: read
   actions: read
@@ -35,11 +35,11 @@ jobs:
 
       - name: Setup .NET
         uses: ./.github/actions/setup-dotnet
-        
+
       - name: .NET Test
         shell: bash
         run: dotnet test --no-build --no-restore --configuration Release --logger "trx;LogFileName=results.trx"
-        
+
       - name: Upload Report
         if: ${{ !cancelled() }}
         uses: dorny/test-reporter@v2
