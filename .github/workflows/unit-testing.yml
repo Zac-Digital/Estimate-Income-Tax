@@ -2,7 +2,7 @@ name: Unit Testing
 
 on:
   pull_request:
-    paths: &push_paths
+    paths:
       - 'src/**'
       - '!src/IncomeTax.Presentation.Web.Node/**'
       - 'test/**'
@@ -12,26 +12,33 @@ on:
     branches:
       - 'main'
       - 'development'
-    paths: *push_paths
+    paths:
+      - 'src/**'
+      - '!src/IncomeTax.Presentation.Web.Node/**'
+      - 'test/**'
+      - '!test/IncomeTax.Presentation.Web.Functional/**'
+      - '.github/workflows/unit-testing.yml'
 
 concurrency:
   group: '${{ github.workflow }}-${{ github.ref }}'
   cancel-in-progress: true
 
-permissions:
-  contents: read
-  actions: read
-  checks: write
+permissions: {}
 
 jobs:
   build-and-test:
     name: Build & Test Solution
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read # Needed for Dorny Test Reporter
+      actions: read  # Needed for Dorny Test Reporter
+      checks: write  # Needed for Dorny Test Reporter
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           ref: ${{ github.ref }}
+          persist-credentials: false
 
       - name: Setup .NET
         uses: ./.github/actions/setup-dotnet
@@ -42,7 +49,7 @@ jobs:
 
       - name: Upload Report
         if: ${{ !cancelled() }}
-        uses: dorny/test-reporter@v3
+        uses: dorny/test-reporter@a43b3a5f7366b97d083190328d2c652e1a8b6aa2
         with:
           name: 'Test Report'
           path: '**.trx'

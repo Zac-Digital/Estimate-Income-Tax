@@ -4,6 +4,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    cooldown: 
+      default-days: 7
     groups:
       actions-deps:
         patterns:
@@ -13,6 +15,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    cooldown:
+      default-days: 7
     groups:
       nuget-deps:
         patterns:
@@ -24,6 +28,8 @@ updates:
       - "test/IncomeTax.Presentation.Web.Functional"
     schedule:
       interval: "daily"
+    cooldown:
+      default-days: 7
     groups:
       npm-deps:
         patterns:
