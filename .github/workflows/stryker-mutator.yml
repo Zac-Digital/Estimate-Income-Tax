@@ -2,7 +2,7 @@ name: Mutation Testing
 
 on:
   pull_request:
-    paths: &push_paths
+    paths:
       - 'src/**'
       - '!src/IncomeTax.Presentation.Web.Node/**'
       - 'test/**'
@@ -13,11 +13,19 @@ on:
     branches:
       - 'main'
       - 'development'
-    paths: *push_paths
+    paths:
+      - 'src/**'
+      - '!src/IncomeTax.Presentation.Web.Node/**'
+      - 'test/**'
+      - '!test/IncomeTax.Presentation.Web.Functional/**'
+      - '.github/workflows/stryker-mutator.yml'
+      - '.github/workflows/unit-testing.yml'
 
 concurrency:
   group: '${{ github.workflow }}-${{ github.ref }}'
   cancel-in-progress: true
+  
+permissions: {}
 
 jobs:
   build-and-test:
@@ -25,9 +33,10 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           ref: ${{ github.ref }}
+          persist-credentials: false
 
       - name: Setup .NET
         uses: ./.github/actions/setup-dotnet
@@ -49,7 +58,7 @@ jobs:
 
       - name: Upload HTML Report
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: 'Stryker Report'
           path: 'StrykerOutput/reports/mutation-report.html'
