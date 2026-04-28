@@ -8,6 +8,7 @@ RUN dotnet publish --no-restore --configuration Release
 
 # -- Runtime -- #
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
+USER app
 WORKDIR /
 COPY --from=build /artifacts/publish/IncomeTax.Presentation.Web/release/ .
 EXPOSE 8080
