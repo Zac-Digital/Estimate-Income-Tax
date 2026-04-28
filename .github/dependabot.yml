@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     cooldown: 
       default-days: 7
     groups:
@@ -14,7 +14,7 @@ updates:
   - package-ecosystem: "nuget"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     cooldown:
       default-days: 7
     groups:
@@ -27,10 +27,21 @@ updates:
       - "src/IncomeTax.Presentation.Web.Node"
       - "test/IncomeTax.Presentation.Web.Functional"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     cooldown:
       default-days: 7
     groups:
       npm-deps:
+        patterns:
+          - "*"
+        
+  - package-ecosystem: "docker-compose"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    groups:
+      docker-compose-deps:
         patterns:
           - "*"

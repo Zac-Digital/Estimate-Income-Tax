@@ -1,7 +1,6 @@
 services:
   estimate-income-tax:
     container_name: Estimate-Income-Tax
-    image: estimate-income-tax:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,7 +10,7 @@ services:
   
   ingress:
     container_name: Estimate-Income-Tax-Ingress
-    image: nginx:latest
+    image: nginx:1.30-alpine3.23
     ports:
       - "8443:443"
     volumes:
