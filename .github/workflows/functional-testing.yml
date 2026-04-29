@@ -2,13 +2,6 @@ name: Functional Testing
 
 on:
   workflow_dispatch:
-  pull_request:
-    paths:
-      - 'src/IncomeTax.Presentation.Web/**'
-      - 'test/IncomeTax.Presentation.Web.Functional/**'
-      - '.github/workflows/functional-testing.yml'
-      - './Dockerfile'
-      - './compose.yaml'
   push:
     branches:
       - 'main'
