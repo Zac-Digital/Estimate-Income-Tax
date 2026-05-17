@@ -76,6 +76,7 @@ jobs:
           /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
           /d:sonar.scanner.skipJreProvisioning=true
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: .NET Restore
@@ -96,4 +97,5 @@ jobs:
           dotnet-sonarscanner end \
           /d:sonar.token="${SONAR_TOKEN}"
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
