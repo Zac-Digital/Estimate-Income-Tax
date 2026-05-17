@@ -119,4 +119,11 @@ public sealed class OnPostJourneyValidatorTests
         
         Assert.False(shouldNavigate);
     }
+
+    [Fact]
+    public void ShouldNavigateToCheckAnswers_When_Stage_Invalid_Throws_Exception()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => _onPostJourneyValidator.ShouldNavigateToCheckAnswers(
+            Guid.NewGuid().ToString()));
+    }
 }
