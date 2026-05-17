@@ -10,7 +10,7 @@ services:
   
   ingress:
     container_name: Estimate-Income-Tax-Ingress
-    image: nginx:1.30-alpine3.23
+    image: nginx:1.31.0-alpine3.23
     ports:
       - "8443:443"
     volumes:

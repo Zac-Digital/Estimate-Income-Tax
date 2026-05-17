@@ -19,7 +19,7 @@
                 @Model.GrossIncome
             </dd>
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> Gross income</span></a>
+                <a class="govuk-link" asp-page="@nameof(Salary)">Change<span class="govuk-visually-hidden"> Gross income</span></a>
             </dd>
         </div>
         
@@ -33,7 +33,7 @@
                     @Model.DaysWorkedPerWeek
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> Days worked a week</span></a>
+                    <a class="govuk-link" asp-page="@nameof(HowManyDaysWorked)">Change<span class="govuk-visually-hidden"> Days worked a week</span></a>
                 </dd>
             </div>
         }
@@ -48,7 +48,7 @@
                     @Model.HoursWorkedPerWeek
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> Hours worked a week</span></a>
+                    <a class="govuk-link" asp-page="@nameof(HowManyHoursWorked)">Change<span class="govuk-visually-hidden"> Hours worked a week</span></a>
                 </dd>
             </div>
         }
@@ -61,7 +61,7 @@
                 @Model.OverStatePensionAge
             </dd>
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> Over State Pension age</span></a>
+                <a class="govuk-link" asp-page="@nameof(StatePension)">Change<span class="govuk-visually-hidden"> Over State Pension age</span></a>
             </dd>
         </div>
     </dl>

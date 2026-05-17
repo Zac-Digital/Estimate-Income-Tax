@@ -26,7 +26,8 @@ public static class Program
         });
 
         builder.Services.AddTransient<SessionService>();
-        builder.Services.AddTransient<JourneyValidator>();
+        builder.Services.AddTransient<OnGetJourneyValidator>();
+        builder.Services.AddTransient<OnPostJourneyValidator>();
 
         WebApplication app = builder.Build();
 
