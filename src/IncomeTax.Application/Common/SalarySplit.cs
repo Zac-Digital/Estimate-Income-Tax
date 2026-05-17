@@ -6,7 +6,7 @@ public static class SalarySplit
 {
     public static (double? Amount, string? Period) Split(string? salary)
     {
-        if (salary is null) return (null, null);
+        if (string.IsNullOrWhiteSpace(salary)) return (null, null);
         
         ReadOnlySpan<char> span = salary.AsSpan();
         return (
