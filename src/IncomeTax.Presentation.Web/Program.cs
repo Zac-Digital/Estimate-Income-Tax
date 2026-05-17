@@ -1,40 +1,38 @@
 using System.Diagnostics.CodeAnalysis;
-using IncomeTax.Application.Journey.Command;
-using IncomeTax.Application.Journey.Query;
+using IncomeTax.Application.Journey;
 using IncomeTax.Application.Session;
+using IncomeTax.Presentation.Web.Filters;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace IncomeTax.Presentation.Web;
 
 [ExcludeFromCodeCoverage]
-public class Program
+public static class Program
 {
     public static void Main(string[] args)
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddRazorPages();
+        builder.Services.AddRazorPages()
+            .AddMvcOptions(options => options.Filters.Add<JourneyFilter>());
 
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddSession(options =>
         {
-            options.IdleTimeout = TimeSpan.FromMinutes(10);
             options.Cookie.HttpOnly = true;
             options.Cookie.IsEssential = true;
+            options.IdleTimeout = TimeSpan.FromMinutes(10);
+            options.Cookie.MaxAge = TimeSpan.FromMinutes(10);
         });
-        
+
         builder.Services.AddTransient<SessionService>();
-        builder.Services.AddTransient<JourneyCommands>();
-        builder.Services.AddTransient<JourneyQueries>();
+        builder.Services.AddTransient<JourneyValidator>();
 
         WebApplication app = builder.Build();
 
-        if (!app.Environment.IsDevelopment())
-        {
-            // TODO: Error Page
-            // app.UseExceptionHandler("/Error");
-            app.UseHsts();
-        }
-
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+            { ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto });
+        app.UseHsts();
         app.UseHttpsRedirection();
 
         app.UseRouting();

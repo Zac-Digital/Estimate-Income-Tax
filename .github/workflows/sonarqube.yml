@@ -1,6 +1,14 @@
 name: SonarQube
 
 on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - '!src/IncomeTax.Presentation.Web.Node/**'
+      - 'test/**'
+      - '!test/IncomeTax.Presentation.Web.Functional/**'
+      - '.github/workflows/sonarqube.yml'
+      - '.github/workflows/unit-testing.yml'
   push:
     branches:
       - 'main'
@@ -26,12 +34,14 @@ jobs:
   build-test-analyse:
     name: Build, Test & Analyse
     runs-on: ubuntu-24.04
+    permissions: 
+      contents: read       # For SonarQube
+      pull-requests: write # For SonarQube
     steps:
       - name: Checkout Repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           fetch-depth: 0
-          ref: ${{ github.ref }}
           persist-credentials: false
 
       - name: Setup .NET ${{ env.DOTNET_VERSION }}
@@ -60,7 +70,7 @@ jobs:
           /o:"zac-digital" \
           /d:sonar.token="${SONAR_TOKEN}" \
           /d:sonar.exclusions=**/certs/** \
-          /d:sonar.coverage.exclusions=**/certs/**,**/src/IncomeTax.Presentation.Web.Node/** \
+          /d:sonar.coverage.exclusions=**/certs/**,**/src/IncomeTax.Presentation.Web/Pages/**,**/src/IncomeTax.Presentation.Web.Node/** \
           /d:sonar.cpd.exclusions=**playwright.config.ts \
           /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
           /d:sonar.scanner.skipJreProvisioning=true

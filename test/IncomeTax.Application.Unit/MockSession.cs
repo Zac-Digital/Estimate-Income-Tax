@@ -1,9 +1,9 @@
+﻿namespace IncomeTax.Application.Unit;
+
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Http;
 
-namespace IncomeTax.Application.Test.Integration;
-
-public sealed class SessionMock : ISession
+public sealed class MockSession : ISession
 {
     private readonly Dictionary<string, byte[]> _sessionStorage = new();
 
