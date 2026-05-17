@@ -22,13 +22,23 @@ on:
 concurrency:
   group: '${{ github.workflow }}-${{ github.ref }}'
   cancel-in-progress: true
-  
-permissions: {}
+
+permissions: { }
 
 jobs:
   build-and-test:
-    name: Build & Run Functional Test Suite
-    runs-on: ubuntu-24.04
+    name: Run Functional Test Suite (${{ matrix.name }})
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ windows-2025, macos-26, ubuntu-24.04 ]
+        include:
+          - name: "Windows"
+            operating-system: windows-2025
+          - name: "macOS"
+            operating-system: macos-26
+          - name: "Linux"
+            operating-system: ubuntu-24.04
     steps:
       - name: Checkout Repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
