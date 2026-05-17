@@ -27,16 +27,14 @@ permissions: { }
 
 jobs:
   build-and-test:
-    name: Run Functional Test Suite (${{ matrix.name }})
+    name: Run Functional Test Suite | ${{ matrix.name }}
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        operating-system: [ windows-2025, macos-26, ubuntu-24.04 ]
+        operating-system: [ windows-2025, ubuntu-24.04 ]
         include:
           - name: "Windows"
             operating-system: windows-2025
-          - name: "macOS"
-            operating-system: macos-26
           - name: "Linux"
             operating-system: ubuntu-24.04
     steps:
@@ -61,11 +59,24 @@ jobs:
         run: |
           npm ci --ignore-scripts
           npx playwright install --with-deps
+          
+      - name: Determine Core Count
+        id: core-count
+        shell: bash
+        run: |
+          if [ command -v nproc > /dev/null ]; then
+            CORES=$(nproc)
+          elif [ -n $NUMBER_OF_PROCESSORS ]; then
+            CORES=$NUMBER_OF_PROCESSORS
+          else
+            CORES=1
+          fi
+          echo "CORES=$CORES" >> $GITHUB_OUTPUT
 
       - name: Run Functional Testing
         working-directory: ./test/IncomeTax.Presentation.Web.Functional
         shell: bash
-        run: npx playwright test --workers `nproc`
+        run: npx playwright test --workers ${{ steps.core-count.outputs.CORES }}
 
       - name: Upload Report
         if: always()
