@@ -1,33 +1,16 @@
-using System.Text;
-using System.Text.Json;
-using IncomeTax.Domain;
-using IncomeTax.Domain.Constant;
+﻿using IncomeTax.Domain.Journey;
 using Microsoft.AspNetCore.Http;
 
 namespace IncomeTax.Application.Session;
 
-public sealed class SessionService
+public sealed class SessionService(IHttpContextAccessor accessor)
 {
-    private readonly IHttpContextAccessor _accessor;
-    private static readonly JsonSerializerOptions JsonSerializerOptions = new(JsonSerializerDefaults.Web);
+    public void Update(JourneyStage stage, string value) =>
+        accessor.HttpContext.Session.SetString(stage.ToString(), value);
 
-    public SessionService(IHttpContextAccessor accessor) { _accessor = accessor; }
+    public string? Get(JourneyStage stage) =>
+        accessor.HttpContext.Session.GetString(stage.ToString());
     
-    public void Serialise<T>(JourneyStage journeyStage, T journeyDto) where T : JourneyDto
-    {
-        string journeyJson = JsonSerializer.Serialize(journeyDto, JsonSerializerOptions);
-        byte[] journeyBytes = Encoding.UTF8.GetBytes(journeyJson);
-        _accessor.HttpContext.Session.Set(journeyStage.ToString(), journeyBytes);
-    }
-
-    public T? Deserialise<T>(JourneyStage journeyStage) where T : JourneyDto
-    {
-        bool hasValue = _accessor.HttpContext.Session.TryGetValue(journeyStage.ToString(), out byte[] journeyBytes);
-        if (!hasValue) return null;
-        string journeyJson = Encoding.UTF8.GetString(journeyBytes);
-        return JsonSerializer.Deserialize<T>(journeyJson, JsonSerializerOptions)!;
-    }
-
-    public void RemoveJourneyStage(JourneyStage journeyStage) =>
-        _accessor.HttpContext.Session.Remove(journeyStage.ToString());
+    public void Remove(JourneyStage stage) => 
+        accessor.HttpContext.Session.Remove(stage.ToString());
 }

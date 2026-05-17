@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IncomeTax.Presentation.Web.Pages;
 
-public class StatePension(SessionService sessionService) : PageModel
+public sealed class HowManyDaysWorked(SessionService sessionService) : PageModel
 {
     [BindProperty]
     [Required]
-    public bool? Pensioner { get; set; }
+    [Range(1, 7)]
+    public int? DaysWorked { get; set; }
 
     public IActionResult OnGet()
     {
-        string? pensioner = sessionService.Get(JourneyStage.StatePension);
-        if (pensioner is not null) Pensioner = pensioner.Equals("Yes");
+        string? daysWorked = sessionService.Get(JourneyStage.HowManyDaysWorked);
+        if (daysWorked is not null) DaysWorked = int.Parse(daysWorked);
         
         return Page();
     }
@@ -27,8 +28,8 @@ public class StatePension(SessionService sessionService) : PageModel
             return Page();
         }
         
-        sessionService.Update(JourneyStage.StatePension, Pensioner!.Value ? "Yes" : "No");
+        sessionService.Update(JourneyStage.HowManyDaysWorked, $"{DaysWorked}");
 
-        return RedirectToPage(nameof(JourneyStage.CheckAnswers));
+        return RedirectToPage(nameof(StatePension));
     }
 }

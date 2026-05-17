@@ -1,0 +1,25 @@
+﻿@page "/days"
+@model IncomeTax.Presentation.Web.Pages.HowManyDaysWorked
+
+@{
+    ViewData["Title"] = "Days Worked Per Week";
+}
+
+<form method="post">
+    <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+            <label class="govuk-label govuk-label--xl" for="days-worked">
+                How many days a week do you usually work?
+            </label>
+        </h1>
+        <div id="days-worked-hint" class="govuk-hint">
+            If you don’t know, an approximate number is fine.
+        </div>
+        <input class="govuk-input govuk-input--width-10" id="days-worked" data-testid="days-worked" type="text"
+               aria-describedby="days-worked-hint" asp-for="DaysWorked">
+    </div>
+
+    <button type="submit" class="govuk-button" data-module="govuk-button" data-testid="button">
+        Save and continue
+    </button>
+</form>

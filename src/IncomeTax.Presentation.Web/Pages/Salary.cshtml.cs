@@ -1,54 +1,49 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using IncomeTax.Application.Journey.Command;
-using IncomeTax.Domain.Constant;
+using System.Globalization;
+using IncomeTax.Application.Common;
+using IncomeTax.Application.Session;
+using IncomeTax.Domain.Journey;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IncomeTax.Presentation.Web.Pages;
 
-[ExcludeFromCodeCoverage(Justification = "OnPost Logic is Tested by Functional Test Suite")]
-public sealed class Salary : PageModel
+public sealed class Salary(SessionService sessionService) : PageModel
 {
-    public readonly string[] Options = SalaryFrequencyExtensions.SalaryPageRadioSet;
-
     [BindProperty]
-    [Required(ErrorMessage = nameof(ErrorAmountIsInvalidType))]
-    [RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = nameof(ErrorAmountIsNotTwoDecimalPlaces))]
+    [Required]
+    [RegularExpression(@"^\d+(\.\d{1,2})?$")]
     public double? Amount { get; set; }
-    
-    [BindProperty] 
-    [Required] 
-    public string Frequency { get; set; } = null!;
 
-    public bool ErrorAmountIsInvalidType { get; private set; }
-    public bool ErrorAmountIsNotTwoDecimalPlaces { get; private set; }
+    [BindProperty] [Required] public string? Period { get; set; }
 
-    public bool ErrorFrequencyIsNotGiven { get; private set; }
+    public void OnGet()
+    {
+        (Amount, Period) = SalarySplit.Split(sessionService.Get(JourneyStage.Salary));
+    }
 
-    public IActionResult OnPost([FromServices] JourneyCommands journey)
+    public IActionResult OnPost()
     {
         if (!ModelState.IsValid)
         {
-            ModelErrorCollection? amountErrorCollection = ModelState[nameof(Amount)]?.Errors;
-
-            if (amountErrorCollection is not null)
-            {
-                ErrorAmountIsInvalidType =
-                    amountErrorCollection.Any(e => e.ErrorMessage.Equals(nameof(ErrorAmountIsInvalidType))) 
-                    || Amount is null;
-                ErrorAmountIsNotTwoDecimalPlaces = amountErrorCollection.Any(e =>
-                    e.ErrorMessage.Equals(nameof(ErrorAmountIsNotTwoDecimalPlaces)));
-            }
-
-            ErrorFrequencyIsNotGiven = ModelState[nameof(Frequency)]?.Errors.Count > 0;
-
             return Page();
         }
 
-        journey.UpdateSalary(Amount!.Value, Frequency);
+        sessionService.Update(JourneyStage.Salary,
+            $"{Amount?.ToString("C", CultureInfo.CreateSpecificCulture("en-GB")).Replace(".00", "")} {Period}");
 
-        return RedirectToPage("./StatePension");
+        switch (Period?.ToUpperInvariant())
+        {
+            case "A DAY":
+                sessionService.Remove(JourneyStage.HowManyHoursWorked);
+                return RedirectToPage(nameof(JourneyStage.HowManyDaysWorked));
+            case "AN HOUR":
+                sessionService.Remove(JourneyStage.HowManyDaysWorked);
+                return RedirectToPage(nameof(JourneyStage.HowManyHoursWorked));
+            default:
+                sessionService.Remove(JourneyStage.HowManyDaysWorked);
+                sessionService.Remove(JourneyStage.HowManyHoursWorked);
+                return RedirectToPage(nameof(JourneyStage.StatePension));
+        }
     }
 }

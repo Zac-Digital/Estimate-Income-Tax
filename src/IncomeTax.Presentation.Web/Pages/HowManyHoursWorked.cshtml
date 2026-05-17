@@ -1,0 +1,25 @@
+﻿@page "/hours"
+@model IncomeTax.Presentation.Web.Pages.HowManyHoursWorked
+
+@{
+    ViewData["Title"] = "Hours Worked Per Week";
+}
+
+<form method="post">
+    <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+            <label class="govuk-label govuk-label--xl" for="hours-worked">
+                How many hours a week do you usually work?
+            </label>
+        </h1>
+        <div id="hours-worked-hint" class="govuk-hint">
+            If you don’t know, an approximate number is fine.
+        </div>
+        <input class="govuk-input govuk-input--width-10" id="hours-worked" data-testid="hours-worked" type="text"
+               aria-describedby="hours-worked-hint" asp-for="HoursWorked">
+    </div>
+
+    <button type="submit" class="govuk-button" data-module="govuk-button" data-testid="button">
+        Save and continue
+    </button>
+</form>

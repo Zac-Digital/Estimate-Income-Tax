@@ -1,54 +1,30 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Text;
-using IncomeTax.Application.Journey.Query;
+﻿using IncomeTax.Application.Session;
+using IncomeTax.Domain.Journey;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IncomeTax.Presentation.Web.Pages;
 
-[ExcludeFromCodeCoverage(Justification = "OnGet Logic is Tested by Functional Test Suite")]
-public sealed class CheckAnswers : PageModel
+public sealed class CheckAnswers(SessionService sessionService) : PageModel
 {
-    public const string NotProvided = "Not provided";
-    
-    public string GrossIncome { get; private set; } = null!;
-    public string OverStatePensionAge { get; private set; } = null!;
-    
-    public string? PayingScottishTax { get; private set; }
-    
-    public string? PensionContributionDescriptor { get; private set; }
-    public string? PensionContribution { get; private set; }
-    
-    public IActionResult OnGet([FromServices] JourneyQueries journey)
-    {
-        GrossIncome = journey.GetGrossIncome();
-        OverStatePensionAge = journey.GetIsOverStatePensionAge();
+    public string? GrossIncome { get; set; }
+    public string? DaysWorkedPerWeek { get; set; }
+    public string? HoursWorkedPerWeek { get; set; }
+    public string? OverStatePensionAge { get; set; }
 
-        bool? isPayingScottishTax = journey.GetIsPayingScottishTax();
-        PayingScottishTax = ParseIsPayingScottishTax(isPayingScottishTax);
-        
-        string? pensionContributionDescriptor = journey.GetPensionContributionDescriptor();
-        string? pensionContribution = journey.GetPensionContribution();
-        PensionContributionDescriptor = pensionContributionDescriptor;
-        PensionContribution = ParsePensionContribution(pensionContributionDescriptor, pensionContribution);
-        
+    public string? TaxCode { get; set; }
+    public string? ScottishIncomeTax { get; set; }
+    public string? PensionContributions { get; set; }
+    public string? StudentLoan { get; set; }
+    public string? PostgraduateLoan { get; set; }
+    
+    public IActionResult OnGet()
+    {
+        GrossIncome = sessionService.Get(JourneyStage.Salary);
+        OverStatePensionAge = sessionService.Get(JourneyStage.StatePension);
+        DaysWorkedPerWeek = sessionService.Get(JourneyStage.HowManyDaysWorked);
+        HoursWorkedPerWeek = sessionService.Get(JourneyStage.HowManyHoursWorked);
+
         return Page();
-    }
-
-    private static string? ParseIsPayingScottishTax(bool? isPayingScottishTax)
-    {
-        if (isPayingScottishTax is null) return null;
-        return isPayingScottishTax.Value ? "Yes" : "No";
-    }
-
-    private static string? ParsePensionContribution(string? pensionDescriptor, string? pensionContribution)
-    {
-        if (pensionDescriptor is null || pensionContribution is null) return null;
-
-        StringBuilder pensionString = new(pensionContribution);
-        if (pensionDescriptor.Equals("£")) pensionString.Insert(0, '£');
-        else pensionString.Append('%');
-        
-        return pensionString.ToString();
     }
 }

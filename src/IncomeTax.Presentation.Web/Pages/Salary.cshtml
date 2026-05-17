@@ -4,17 +4,77 @@
     ViewData["Title"] = "Salary";
 }
 
+<h2 class="govuk-heading-l">How much are you paid?</h2>
+
 <form method="post">
-    @await Html.PartialAsync("SalaryPartials/_ErrorSummary", Model)
-
-    <h2 class="govuk-heading-l">How much are you paid?</h2>
-    
-    @await Html.PartialAsync("SalaryPartials/_TextInput", Model)
-    @await Html.PartialAsync("SalaryPartials/_RadioSet", Model)
-
-    <div class="govuk-button-group">
-        <button type="submit" class="govuk-button" data-module="govuk-button">
-            Continue
-        </button>
+    <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+            <label class="govuk-label govuk-label--m" for="amount">Gross amount, in pounds</label>
+            <div id="amount-hint" class="govuk-hint">This is the amount you are paid before any deductions are made.
+            </div>
+        </h1>
+        <div class="govuk-input__wrapper">
+            <div class="govuk-input__prefix" aria-hidden="true">£</div>
+            <input class="govuk-input govuk-input--width-10" id="amount" data-testid="amount"
+                   aria-describedby="amount-hint" type="text" spellcheck="false" asp-for="Amount"/>
+        </div>
     </div>
+
+    <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                <h1 class="govuk-fieldset__heading">
+                    How often are you paid this amount?
+                </h1>
+            </legend>
+            <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="period-1" data-testid="period-1" type="radio"
+                           value="a year" asp-for="Period">
+                    <label class="govuk-label govuk-radios__label" for="period-1">
+                        Yearly
+                    </label>
+                </div>
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="period-2" data-testid="period-2" type="radio"
+                           value="a month" asp-for="Period">
+                    <label class="govuk-label govuk-radios__label" for="period-2">
+                        Monthly
+                    </label>
+                </div>
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="period-3" data-testid="period-3" type="radio"
+                           value="every 4 weeks" asp-for="Period">
+                    <label class="govuk-label govuk-radios__label" for="period-3">
+                        Every 4 weeks
+                    </label>
+                </div>
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="period-4" data-testid="period-4" type="radio"
+                           value="a week" asp-for="Period">
+                    <label class="govuk-label govuk-radios__label" for="period-4">
+                        Weekly
+                    </label>
+                </div>
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="period-5" data-testid="period-5" type="radio"
+                           value="a day" asp-for="Period">
+                    <label class="govuk-label govuk-radios__label" for="period-5">
+                        Daily
+                    </label>
+                </div>
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="period-6" data-testid="period-6" type="radio"
+                           value="an hour" asp-for="Period">
+                    <label class="govuk-label govuk-radios__label" for="period-6">
+                        Hourly
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+
+    <button type="submit" class="govuk-button" data-module="govuk-button" data-testid="button">
+        Save and continue
+    </button>
 </form>

@@ -1,13 +1,15 @@
 ﻿@page "/check-answers"
 @model IncomeTax.Presentation.Web.Pages.CheckAnswers
+
 @{
-    ViewData["Title"] = "Check Answers";
+    ViewData["Title"] = "Check Your Answers";
 }
 
-<form method="post">
-    <h1 class="govuk-heading-xl">Check your answers</h1>
+<h1 class="govuk-heading-xl">Check your answers</h1>
 
-    <h2 class="govuk-heading-l">Your Income</h2>
+<h2 class="govuk-heading-l">Your Income</h2>
+
+<form method="post">
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
@@ -17,9 +19,40 @@
                 @Model.GrossIncome
             </dd>
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> gross income</span></a>
+                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> Gross income</span></a>
             </dd>
         </div>
+        
+        @if (Model.DaysWorkedPerWeek is not null)
+        {
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Days worked a week
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @Model.DaysWorkedPerWeek
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> Days worked a week</span></a>
+                </dd>
+            </div>
+        }
+        
+        @if (Model.HoursWorkedPerWeek is not null)
+        {
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Hours worked a week
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @Model.HoursWorkedPerWeek
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> Hours worked a week</span></a>
+                </dd>
+            </div>
+        }
+        
         <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
                 Over State Pension age
@@ -28,20 +61,24 @@
                 @Model.OverStatePensionAge
             </dd>
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> over state pension age</span></a>
+                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> Over State Pension age</span></a>
             </dd>
         </div>
     </dl>
-
+    
     <h2 class="govuk-heading-l">Additional questions (Optional)</h2>
     <p class="govuk-body">Your results may be more accurate if you answer additional questions.</p>
+    
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
                 Tax Code
             </dt>
             <dd class="govuk-summary-list__value">
-                1257L
+                @(Model.TaxCode ?? "Not provided")
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="#">Add<span class="govuk-visually-hidden"> Tax Code</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row">
@@ -49,11 +86,10 @@
                 Scottish Income Tax
             </dt>
             <dd class="govuk-summary-list__value">
-                @(Model.PayingScottishTax ?? CheckAnswers.NotProvided)
+                @(Model.ScottishIncomeTax ?? "Not provided")
             </dd>
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/scottish-tax">@(Model.PayingScottishTax is null ? "Add" : "Change")<span
-                        class="govuk-visually-hidden"> scottish income tax</span></a>
+                <a class="govuk-link" href="#">Add<span class="govuk-visually-hidden"> Scottish Income Tax</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row">
@@ -61,12 +97,10 @@
                 Pension contributions
             </dt>
             <dd class="govuk-summary-list__value">
-                @(Model.PensionContribution is null ? CheckAnswers.NotProvided : Model.PensionContribution + " a month")
+                @(Model.PensionContributions ?? "Not provided")
             </dd>
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link"
-                   href="/pension-contribution-@(Model.PensionContributionDescriptor is null or "%" ? "percentage" : "fixed")">@(Model.PensionContribution is null ? "Add" : "Change")<span
-                        class="govuk-visually-hidden"> pension contributions</span></a>
+                <a class="govuk-link" href="#">Add<span class="govuk-visually-hidden"> Pension contributions</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row">
@@ -74,10 +108,10 @@
                 Student loan
             </dt>
             <dd class="govuk-summary-list__value">
-                Placeholder
+                @(Model.StudentLoan ?? "Not provided")
             </dd>
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="#">Add<span class="govuk-visually-hidden"> student loan</span></a>
+                <a class="govuk-link" href="#">Add<span class="govuk-visually-hidden"> Student loan</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row">
@@ -85,15 +119,15 @@
                 Postgraduate loan
             </dt>
             <dd class="govuk-summary-list__value">
-                Placeholder
+                @(Model.PostgraduateLoan ?? "Not provided")
             </dd>
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="#">Add<span class="govuk-visually-hidden"> postgraduate loan</span></a>
+                <a class="govuk-link" href="#">Add<span class="govuk-visually-hidden"> Postgraduate loan</span></a>
             </dd>
         </div>
     </dl>
-
-    <button type="submit" class="govuk-button" data-module="govuk-button">
+    
+    <button type="submit" class="govuk-button" data-module="govuk-button" data-testid="button">
         Calculate take-home pay
     </button>
 </form>

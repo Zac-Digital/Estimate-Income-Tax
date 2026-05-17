@@ -37,6 +37,8 @@ for (const subFolder of subFoldersGovUk) {
         cpSync(`${targetDirectory}/${file}`, `./out/assets/${subFolder}/${file}`, { force: true, recursive: true });
     });
 }
+
+cpSync(`${assetDirectoryGovUk}manifest.json`, "./out/assets/manifest.json", { force: true });
 // -- Copy GOV.UK Assets --
 
 // -- Copy MoJ Assets --
