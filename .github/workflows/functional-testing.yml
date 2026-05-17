@@ -49,7 +49,7 @@ jobs:
       - name: Run Functional Testing
         working-directory: ./test/IncomeTax.Presentation.Web.Functional
         shell: bash
-        run: npx playwright test --workers 1
+        run: npx playwright test --workers `nproc`
 
       - name: Upload Report
         if: always()
