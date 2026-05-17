@@ -6,25 +6,25 @@ using NSubstitute;
 
 namespace IncomeTax.Application.Unit.Journey;
 
-public sealed class JourneyValidatorTests
+public sealed class OnGetJourneyValidatorTests
 {
-    private IHttpContextAccessor _accessor;
+    private readonly IHttpContextAccessor _accessor;
 
-    private readonly JourneyValidator _journeyValidator;
+    private readonly OnGetJourneyValidator _onGetJourneyValidator;
 
-    public JourneyValidatorTests()
+    public OnGetJourneyValidatorTests()
     {
         _accessor = Substitute.For<IHttpContextAccessor>();
         _accessor.HttpContext = new DefaultHttpContext();
         _accessor.HttpContext.Session = new MockSession();
         
-        _journeyValidator = new JourneyValidator(new SessionService(_accessor));
+        _onGetJourneyValidator = new OnGetJourneyValidator(new SessionService(_accessor));
     }
 
     [Fact]
     public void IsValid_When_Stage_Index_IsValid_Returns_True_With_NoRedirect()
     {
-        bool isValid = _journeyValidator.IsValid(nameof(JourneyStage.Index), out string? redirectPage);
+        bool isValid = _onGetJourneyValidator.IsValid(nameof(JourneyStage.Index), out string? redirectPage);
         
         Assert.True(isValid);
         Assert.Null(redirectPage);
@@ -33,7 +33,7 @@ public sealed class JourneyValidatorTests
     [Fact]
     public void IsValid_When_Stage_Salary_IsValid_Returns_True_With_NoRedirect()
     {
-        bool isValid = _journeyValidator.IsValid(nameof(JourneyStage.Salary), out string? redirectPage);
+        bool isValid = _onGetJourneyValidator.IsValid(nameof(JourneyStage.Salary), out string? redirectPage);
         
         Assert.True(isValid);
         Assert.Null(redirectPage);
@@ -44,7 +44,7 @@ public sealed class JourneyValidatorTests
     {
         _accessor.HttpContext.Session.SetString(nameof(JourneyStage.Salary), "£100.10 a day");
         
-        bool isValid = _journeyValidator.IsValid(nameof(JourneyStage.HowManyDaysWorked), out string? redirectPage);
+        bool isValid = _onGetJourneyValidator.IsValid(nameof(JourneyStage.HowManyDaysWorked), out string? redirectPage);
         
         Assert.True(isValid);
         Assert.Null(redirectPage);
@@ -61,7 +61,7 @@ public sealed class JourneyValidatorTests
         if (salary is not null) 
             _accessor.HttpContext.Session.SetString(nameof(JourneyStage.Salary), salary);
         
-        bool isValid = _journeyValidator.IsValid(nameof(JourneyStage.HowManyDaysWorked), out string? redirectPage);
+        bool isValid = _onGetJourneyValidator.IsValid(nameof(JourneyStage.HowManyDaysWorked), out string? redirectPage);
         
         Assert.False(isValid);
         Assert.Equal(nameof(JourneyStage.Salary), redirectPage);
@@ -72,7 +72,7 @@ public sealed class JourneyValidatorTests
     {
         _accessor.HttpContext.Session.SetString(nameof(JourneyStage.Salary), "£20.20 an hour");
         
-        bool isValid = _journeyValidator.IsValid(nameof(JourneyStage.HowManyHoursWorked), out string? redirectPage);
+        bool isValid = _onGetJourneyValidator.IsValid(nameof(JourneyStage.HowManyHoursWorked), out string? redirectPage);
         
         Assert.True(isValid);
         Assert.Null(redirectPage);
@@ -89,7 +89,7 @@ public sealed class JourneyValidatorTests
         if (salary is not null) 
             _accessor.HttpContext.Session.SetString(nameof(JourneyStage.Salary), salary);
         
-        bool isValid = _journeyValidator.IsValid(nameof(JourneyStage.HowManyHoursWorked), out string? redirectPage);
+        bool isValid = _onGetJourneyValidator.IsValid(nameof(JourneyStage.HowManyHoursWorked), out string? redirectPage);
         
         Assert.False(isValid);
         Assert.Equal(nameof(JourneyStage.Salary), redirectPage);
@@ -100,7 +100,7 @@ public sealed class JourneyValidatorTests
     {
         _accessor.HttpContext.Session.SetString(nameof(JourneyStage.Salary), "£32,768 a year");
         
-        bool isValid = _journeyValidator.IsValid(nameof(JourneyStage.StatePension), out string? redirectPage);
+        bool isValid = _onGetJourneyValidator.IsValid(nameof(JourneyStage.StatePension), out string? redirectPage);
         
         Assert.True(isValid);
         Assert.Null(redirectPage);
@@ -112,7 +112,7 @@ public sealed class JourneyValidatorTests
         _accessor.HttpContext.Session.SetString(nameof(JourneyStage.Salary), "£100.10 a day");
         _accessor.HttpContext.Session.SetString(nameof(JourneyStage.HowManyDaysWorked), "5");
         
-        bool isValid = _journeyValidator.IsValid(nameof(JourneyStage.StatePension), out string? redirectPage);
+        bool isValid = _onGetJourneyValidator.IsValid(nameof(JourneyStage.StatePension), out string? redirectPage);
         
         Assert.True(isValid);
         Assert.Null(redirectPage);
@@ -124,7 +124,7 @@ public sealed class JourneyValidatorTests
         _accessor.HttpContext.Session.SetString(nameof(JourneyStage.Salary), "20.20 an hour");
         _accessor.HttpContext.Session.SetString(nameof(JourneyStage.HowManyHoursWorked), "40");
         
-        bool isValid = _journeyValidator.IsValid(nameof(JourneyStage.StatePension), out string? redirectPage);
+        bool isValid = _onGetJourneyValidator.IsValid(nameof(JourneyStage.StatePension), out string? redirectPage);
         
         Assert.True(isValid);
         Assert.Null(redirectPage);
@@ -139,7 +139,7 @@ public sealed class JourneyValidatorTests
         if (salary is not null)
             _accessor.HttpContext.Session.SetString(nameof(JourneyStage.Salary), salary);
         
-        bool isValid = _journeyValidator.IsValid(nameof(JourneyStage.StatePension), out string? redirectPage);
+        bool isValid = _onGetJourneyValidator.IsValid(nameof(JourneyStage.StatePension), out string? redirectPage);
         
         Assert.False(isValid);
         Assert.Equal(expectedRedirect, redirectPage);
@@ -151,7 +151,7 @@ public sealed class JourneyValidatorTests
         _accessor.HttpContext.Session.SetString(nameof(JourneyStage.Salary), "£32,768 a year");
         _accessor.HttpContext.Session.SetString(nameof(JourneyStage.StatePension), "No");
         
-        bool isValid = _journeyValidator.IsValid(nameof(JourneyStage.CheckAnswers), out string? redirectPage);
+        bool isValid = _onGetJourneyValidator.IsValid(nameof(JourneyStage.CheckAnswers), out string? redirectPage);
         
         Assert.True(isValid);
         Assert.Null(redirectPage);   
@@ -166,7 +166,7 @@ public sealed class JourneyValidatorTests
         _accessor.HttpContext.Session.SetString(optionalStage, "4");
         _accessor.HttpContext.Session.SetString(nameof(JourneyStage.StatePension), "No");
         
-        bool isValid = _journeyValidator.IsValid(nameof(JourneyStage.CheckAnswers), out string? redirectPage);
+        bool isValid = _onGetJourneyValidator.IsValid(nameof(JourneyStage.CheckAnswers), out string? redirectPage);
         
         Assert.True(isValid);
         Assert.Null(redirectPage);   
@@ -177,7 +177,7 @@ public sealed class JourneyValidatorTests
     {
         _accessor.HttpContext.Session.SetString(nameof(JourneyStage.Salary), "£32,768 a year");
         
-        bool isValid = _journeyValidator.IsValid(nameof(JourneyStage.CheckAnswers), out string? redirectPage);
+        bool isValid = _onGetJourneyValidator.IsValid(nameof(JourneyStage.CheckAnswers), out string? redirectPage);
         
         Assert.False(isValid);
         Assert.Equal(nameof(JourneyStage.StatePension), redirectPage);
@@ -188,7 +188,7 @@ public sealed class JourneyValidatorTests
     {
         _accessor.HttpContext.Session.SetString(nameof(JourneyStage.StatePension), "No");
         
-        bool isValid = _journeyValidator.IsValid(nameof(JourneyStage.CheckAnswers), out string? redirectPage);
+        bool isValid = _onGetJourneyValidator.IsValid(nameof(JourneyStage.CheckAnswers), out string? redirectPage);
         
         Assert.False(isValid);
         Assert.Equal(nameof(JourneyStage.Salary), redirectPage);
@@ -197,7 +197,7 @@ public sealed class JourneyValidatorTests
     [Fact]
     public void IsValid_When_Core_Stage_Salary_StatePension_CheckAnswers_IsNotValid_Returns_False_With_Redirect()
     {
-        bool isValid = _journeyValidator.IsValid(nameof(JourneyStage.CheckAnswers), out string? redirectPage);
+        bool isValid = _onGetJourneyValidator.IsValid(nameof(JourneyStage.CheckAnswers), out string? redirectPage);
         
         Assert.False(isValid);
         Assert.Equal(nameof(JourneyStage.StatePension), redirectPage);
@@ -209,7 +209,7 @@ public sealed class JourneyValidatorTests
         _accessor.HttpContext.Session.SetString(nameof(JourneyStage.HowManyDaysWorked), "5");
         _accessor.HttpContext.Session.SetString(nameof(JourneyStage.HowManyHoursWorked), "40");
         
-        bool isValid = _journeyValidator.IsValid(nameof(JourneyStage.CheckAnswers), out string? redirectPage);
+        bool isValid = _onGetJourneyValidator.IsValid(nameof(JourneyStage.CheckAnswers), out string? redirectPage);
         
         Assert.False(isValid);
         Assert.Equal(nameof(JourneyStage.Salary), redirectPage);

@@ -4,7 +4,7 @@ using IncomeTax.Domain.Journey;
 
 namespace IncomeTax.Application.Journey;
 
-public sealed class JourneyValidator(SessionService sessionService)
+public sealed class OnGetJourneyValidator(SessionService sessionService)
 {
     public bool IsValid(string currentPage, out string? redirectPage)
     {
