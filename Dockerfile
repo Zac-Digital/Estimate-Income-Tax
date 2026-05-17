@@ -13,7 +13,7 @@ RUN npm run build
 # -- Build Node -- #
 
 # -- Build .NET -- #
-FROM mcr.microsoft.com/dotnet/sdk:10.0.300-alpine3.23-amd64 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0.300-alpine3.23 AS build
 WORKDIR /src
 
 COPY ["Directory.Build.props", "."]
@@ -33,7 +33,7 @@ RUN dotnet publish src/IncomeTax.Presentation.Web/IncomeTax.Presentation.Web.csp
 # -- Build .NET -- #
 
 # -- Runtime -- #
-FROM mcr.microsoft.com/dotnet/aspnet:10.0.8-alpine3.23-amd64
+FROM mcr.microsoft.com/dotnet/aspnet:10.0.8-alpine3.23
 RUN apk add --no-cache icu-libs && apk add --no-cache icu-data-full
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 USER app
