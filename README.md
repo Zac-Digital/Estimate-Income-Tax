@@ -29,7 +29,7 @@ It uses the [GOV.UK FrontEnd](https://github.com/alphagov/govuk-frontend) and fo
     |- IncomeTax.Presentation.Web
     |- IncomeTax.Presentation.Web.Node
 |- test
-    |- IncomeTax.Application.Test.Integration
+    |- IncomeTax.Application.Unit
     |- IncomeTax.Presentation.Web.Functional
 ```
 
@@ -48,7 +48,7 @@ This follows a reasonable layered clean architecture approach:
 
 ### test
 
-- `IncomeTax.Application.Test.Integration` - This is where the integration tests are located.
+- `IncomeTax.Application.Unit` - This is where the unit tests are located.
 - `IncomeTax.Presentation.Web.Functional` - This is where the functional / E2E tests are located. Uses Playwright.
 
 ## Building & Running
