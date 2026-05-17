@@ -1,10 +1,16 @@
-﻿using IncomeTax.Application.Journey;
+﻿using System.Diagnostics.CodeAnalysis;
+using IncomeTax.Application.Journey;
 using IncomeTax.Presentation.Web.Pages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace IncomeTax.Presentation.Web.Filters;
 
+[ExcludeFromCodeCoverage(Justification = """
+                                         Very simple filtering logic, would effectively be testing .NET itself.
+                                         
+                                         JourneyValidators are extensively tested already.
+                                         """)]
 public sealed class JourneyFilter(
     OnGetJourneyValidator onGetJourneyValidator,
     OnPostJourneyValidator onPostJourneyValidator) : IPageFilter
