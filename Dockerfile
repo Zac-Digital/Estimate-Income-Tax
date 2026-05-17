@@ -16,13 +16,12 @@ RUN npm run build
 FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine AS build
 WORKDIR /src
 
-COPY ["IncomeTax.slnx", "."]
 COPY ["Directory.Build.props", "."]
 COPY ["src/IncomeTax.Application/IncomeTax.Application.csproj", "src/IncomeTax.Application/"]
 COPY ["src/IncomeTax.Domain/IncomeTax.Domain.csproj", "src/IncomeTax.Domain/"]
 COPY ["src/IncomeTax.Presentation.Web/IncomeTax.Presentation.Web.csproj", "src/IncomeTax.Presentation.Web/"]
 
-RUN dotnet restore
+RUN dotnet restore src/IncomeTax.Presentation.Web/IncomeTax.Presentation.Web.csproj
 
 COPY ["src/IncomeTax.Application/", "./src/IncomeTax.Application/"]
 COPY ["src/IncomeTax.Domain/", "./src/IncomeTax.Domain/"]
@@ -30,7 +29,7 @@ COPY ["src/IncomeTax.Presentation.Web/", "./src/IncomeTax.Presentation.Web/"]
 
 COPY --from=build-node ["/IncomeTax.Presentation.Web/wwwroot/", "./src/IncomeTax.Presentation.Web/wwwroot/"]
 
-RUN dotnet publish --no-restore --configuration Release
+RUN dotnet publish src/IncomeTax.Presentation.Web/IncomeTax.Presentation.Web.csproj --no-restore --configuration Release
 # -- Build .NET -- #
 
 # -- Runtime -- #
