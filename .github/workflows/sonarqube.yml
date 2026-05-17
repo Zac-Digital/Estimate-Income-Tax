@@ -34,6 +34,9 @@ jobs:
   build-test-analyse:
     name: Build, Test & Analyse
     runs-on: ubuntu-24.04
+    permissions: 
+      contents: read
+      pull-requests: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
@@ -68,7 +71,7 @@ jobs:
           /o:"zac-digital" \
           /d:sonar.token="${SONAR_TOKEN}" \
           /d:sonar.exclusions=**/certs/** \
-          /d:sonar.coverage.exclusions=**/certs/**,**/src/IncomeTax.Presentation.Web.Node/** \
+          /d:sonar.coverage.exclusions=**/certs/**,**/src/IncomeTax.Presentation.Web/Pages/**,**/src/IncomeTax.Presentation.Web.Node/** \
           /d:sonar.cpd.exclusions=**playwright.config.ts \
           /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
           /d:sonar.scanner.skipJreProvisioning=true
