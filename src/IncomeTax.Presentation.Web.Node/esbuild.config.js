@@ -17,7 +17,6 @@ await esbuild.build({
         sassPlugin({
             loadPaths: [
                 '.',
-                'node_modules/@ministryofjustice/frontend',
                 'node_modules/govuk-frontend/dist',
             ],
             quietDeps: true
@@ -41,27 +40,10 @@ for (const subFolder of subFoldersGovUk) {
 cpSync(`${assetDirectoryGovUk}manifest.json`, "./out/assets/manifest.json", { force: true });
 // -- Copy GOV.UK Assets --
 
-// -- Copy MoJ Assets --
-const assetDirectoryMoJ = "./node_modules/@ministryofjustice/frontend/moj/assets/";
-const subFoldersMoJ = ["images"];
-
-for (const subFolder of subFoldersMoJ) {
-    const targetDirectory = assetDirectoryMoJ + subFolder;
-    readdirSync(targetDirectory).forEach(file => {
-        cpSync(`${targetDirectory}/${file}`, `./out/assets/${subFolder}/${file}`, { force: true });
-    });
-}
-// -- Copy MoJ Assets --
-
 // -- Copy GOV.UK Minified JS --
 cpSync("./node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.js", "./out/js/govuk-frontend.min.js", { force: true });
 cpSync("./node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.js.map", "./out/js/govuk-frontend.min.js.map", { force: true });
 // -- Copy GOV.UK Minified JS --
-
-// -- Copy MoJ Minified JS --
-cpSync("./node_modules/@ministryofjustice/frontend/moj/moj-frontend.min.js", "./out/js/moj-frontend.min.js", { force: true });
-cpSync("./node_modules/@ministryofjustice/frontend/moj/moj-frontend.min.js.map", "./out/js/moj-frontend.min.js.map", { force: true });
-// -- Copy MoJ Minified JS --
 
 // -- Copy Output to IncomeTax.Presentation.Web --
 const outputDirectory = "../IncomeTax.Presentation.Web/wwwroot/";
