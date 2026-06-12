@@ -1,4 +1,4 @@
-﻿# -- Build Node -- #
+# -- Build Node -- #
 FROM node:26-alpine@sha256:144769ec3f32e8ee36b3cfde91e82bee25d9367b20f31a151f3f7eea3a2a8541 AS build-node
 WORKDIR /src
 
@@ -13,7 +13,7 @@ RUN npm run build
 # -- Build Node -- #
 
 # -- Build .NET -- #
-FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine@sha256:76c0a94454533f6d4a8667c2515b1a67a4f0389f84303b7a352c2045fccb63ed AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine@sha256:fac7cce841f78faa4bca416fb4c636d1a129c09abd9b50e9b45664b95fd008a0 AS build
 WORKDIR /src
 
 COPY ["Directory.Build.props", "."]
