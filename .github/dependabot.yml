@@ -39,8 +39,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-#    cooldown:
-#      default-days: 7
+    cooldown:
+      default-days: 7
     ignore:
       - dependency-name: "node"
         update-types: ["version-update:semver-major"]
