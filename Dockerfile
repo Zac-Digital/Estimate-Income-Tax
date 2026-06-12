@@ -13,7 +13,7 @@ RUN npm run build
 # -- Build Node -- #
 
 # -- Build .NET -- #
-FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine@sha256:5c559aa5d99337e400d39ab4fa1f6979d126c29b20939d53658ed38300571e74 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine@sha256:76c0a94454533f6d4a8667c2515b1a67a4f0389f84303b7a352c2045fccb63ed AS build
 WORKDIR /src
 
 COPY ["Directory.Build.props", "."]
@@ -33,7 +33,7 @@ RUN dotnet publish src/IncomeTax.Presentation.Web/IncomeTax.Presentation.Web.csp
 # -- Build .NET -- #
 
 # -- Runtime -- #
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine@sha256:1e37a8236c558ae31bd6bc8144e38e6036b73cf1b0616fe56d79e60babb9d93b
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine@sha256:6c8c1cac5dfbdbb5848fdd3dedee1f3a7d23d013d0763c68ee9a3ed5c2367c8b
 RUN apk add --no-cache icu-libs && apk add --no-cache icu-data-full
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 USER app
