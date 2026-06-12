@@ -34,7 +34,7 @@ jobs:
   build-test-analyse:
     if: ${{ github.actor != 'dependabot[bot]' }}
     name: Build, Test & Analyse
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-24.04
     permissions: 
       contents: read       # For SonarQube
       pull-requests: write # For SonarQube
