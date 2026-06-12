@@ -12,7 +12,7 @@ public sealed class CheckAnswers(SessionService sessionService) : PageModel
     public string? HoursWorkedPerWeek { get; set; }
     public string? OverStatePensionAge { get; set; }
 
-    public string? TaxCode { get; set; }
+    public const string TaxCode = "1257L";
     public string? ScottishIncomeTax { get; set; }
     public string? PensionContributions { get; set; }
     public string? StudentLoan { get; set; }
