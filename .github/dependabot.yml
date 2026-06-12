@@ -45,9 +45,9 @@ updates:
       - dependency-name: "node"
         versions: [">=27"]
       - dependency-name: "mcr.microsoft.com/dotnet/sdk"
-        versions: [">=11"]
+        versions: [">=11.0"]
       - dependency-name: "mcr.microsoft.com/dotnet/aspnet"
-        versions: [">=11"]
+        versions: [">=11.0"]
     groups:
       docker-deps:
         patterns:
