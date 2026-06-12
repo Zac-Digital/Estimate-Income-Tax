@@ -46,8 +46,6 @@ updates:
         versions: [">=27"]
       - dependency-name: "mcr.microsoft.com/dotnet/sdk"
         versions: [">=11"]
-      - dependency-name: "node"
-        versions: [ ">=27" ]
       - dependency-name: "mcr.microsoft.com/dotnet/aspnet"
         versions: [ ">=11" ]
     groups:
