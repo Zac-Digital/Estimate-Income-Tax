@@ -45,9 +45,9 @@ updates:
       - dependency-name: "node"
         versions: ["~> 27"]
       - dependency-name: "mcr.microsoft.com/dotnet/sdk"
-        versions: ["~> 9.0"]
+        update-types: ["version-update:semver-major"]
       - dependency-name: "mcr.microsoft.com/dotnet/aspnet"
-        versions: ["~> 9.0"]
+        update-types: ["version-update:semver-major"]
     groups:
       docker-deps:
         patterns:
