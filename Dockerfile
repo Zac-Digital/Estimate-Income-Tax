@@ -13,7 +13,7 @@ RUN npm run build
 # -- Build Node -- #
 
 # -- Build .NET -- #
-FROM mcr.microsoft.com/dotnet/sdk:8.0@sha256:76c0a94454533f6d4a8667c2515b1a67a4f0389f84303b7a352c2045fccb63ed AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine@sha256:76c0a94454533f6d4a8667c2515b1a67a4f0389f84303b7a352c2045fccb63ed AS build
 WORKDIR /src
 
 COPY ["Directory.Build.props", "."]

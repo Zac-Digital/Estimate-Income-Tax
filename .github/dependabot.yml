@@ -43,11 +43,11 @@ updates:
 #      default-days: 7
     ignore:
       - dependency-name: "node"
-        versions: [">= 27.0.0"]
-      - dependency-name: "mcr.microsoft.com/dotnet/sdk"
-        versions: [">= 9.0.0"]
-      - dependency-name: "mcr.microsoft.com/dotnet/aspnet"
-        versions: [">= 9.0.0"]
+        versions: [">= 27"]
+      - dependency-name: "dotnet/sdk"
+        versions: [">= 9.0"]
+      - dependency-name: "dotnet/aspnet"
+        versions: [">= 9.0"]
     groups:
       docker-deps:
         patterns:
