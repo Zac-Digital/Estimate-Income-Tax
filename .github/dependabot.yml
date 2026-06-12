@@ -61,7 +61,7 @@ updates:
       default-days: 7
     ignore:
       - dependency-name: "nginx"
-        versions: [">=2"]
+        update-types: ["version-update:semver-major"]
     groups:
       docker-compose-deps:
         patterns:
