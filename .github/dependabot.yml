@@ -48,10 +48,10 @@ updates:
         versions: [">= 9.0.0"]
       - dependency-name: "mcr.microsoft.com/dotnet/aspnet"
         versions: [">= 9.0.0"]
-#    groups:
-#      docker-deps:
-#        patterns:
-#          - "*"
+    groups:
+      docker-deps:
+        patterns:
+          - "*"
         
   - package-ecosystem: "docker-compose"
     directory: "/"
