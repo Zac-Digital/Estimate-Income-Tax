@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/Zac-Digital/Estimate-Income-Tax#readme",
   "dependencies": {
-    "esbuild": "0.28.0",
+    "esbuild": "0.28.1",
     "esbuild-sass-plugin": "3.7.0",
     "govuk-frontend": "6.2.0",
     "moment": "2.30.1",
