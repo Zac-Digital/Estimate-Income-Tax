@@ -1,0 +1,8 @@
+﻿ {
+	admin off
+}
+
+localhost {
+	tls internal
+	reverse_proxy estimate-income-tax:8080
+}

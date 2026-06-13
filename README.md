@@ -22,7 +22,6 @@ It uses the [GOV.UK FrontEnd](https://github.com/alphagov/govuk-frontend) and fo
 
 ```
 .
-|- certs
 |- src
     |- IncomeTax.Application
     |- IncomeTax.Domain
@@ -32,10 +31,6 @@ It uses the [GOV.UK FrontEnd](https://github.com/alphagov/govuk-frontend) and fo
     |- IncomeTax.Application.Unit
     |- IncomeTax.Presentation.Web.Functional
 ```
-
-### certs
-
-This folder contains some generated certificates and keys for running the Docker container locally with an Nginx proxy as the ingress.
 
 ### src
 
