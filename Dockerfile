@@ -34,7 +34,7 @@ RUN dotnet publish src/IncomeTax.Presentation.Web/IncomeTax.Presentation.Web.csp
 
 # -- Runtime -- #
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine@sha256:f03685b2735e0d3d25d6c60672e74b21bb6334f1402f71bae2d2cf02307163cd
-RUN apk add --no-cache icu-libs && apk add --no-cache icu-data-full
+RUN apk add --no-cache icu-libs icu-data-full
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 USER app
 WORKDIR /app
