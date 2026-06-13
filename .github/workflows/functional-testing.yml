@@ -5,6 +5,7 @@ on:
   pull_request:
     paths:
       - 'src/IncomeTax.Presentation.Web/**'
+      - 'src/IncomeTax.Presentation.Web.Node/**'
       - 'test/IncomeTax.Presentation.Web.Functional/**'
       - '.github/workflows/functional-testing.yml'
       - 'Dockerfile'
@@ -14,6 +15,7 @@ on:
       - 'main'
     paths:
       - 'src/IncomeTax.Presentation.Web/**'
+      - 'src/IncomeTax.Presentation.Web.Node/**'
       - 'test/IncomeTax.Presentation.Web.Functional/**'
       - '.github/workflows/functional-testing.yml'
       - 'Dockerfile'
