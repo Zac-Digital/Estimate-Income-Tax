@@ -60,7 +60,7 @@ updates:
     cooldown:
       default-days: 7
     ignore:
-      - dependency-name: "nginx"
+      - dependency-name: "caddy"
         update-types: ["version-update:semver-major"]
     groups:
       docker-compose-deps:

@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using IncomeTax.Application.Journey;
 using IncomeTax.Application.Session;
 using IncomeTax.Presentation.Web.Filters;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
 
 namespace IncomeTax.Presentation.Web;
@@ -13,6 +14,10 @@ public static class Program
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddDataProtection()
+            .PersistKeysToFileSystem(new DirectoryInfo("/home/app/.aspnet/DataProtection-Keys"))
+            .SetApplicationName("Estimate-Income-Tax");
+        
         builder.Services.AddRazorPages()
             .AddMvcOptions(options => options.Filters.Add<JourneyFilter>());
 
@@ -34,7 +39,6 @@ public static class Program
         app.UseForwardedHeaders(new ForwardedHeadersOptions
             { ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto });
         app.UseHsts();
-        app.UseHttpsRedirection();
 
         app.UseRouting();
         app.UseSession();
