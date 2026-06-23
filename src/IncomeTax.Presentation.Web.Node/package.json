@@ -24,6 +24,6 @@
     "esbuild-sass-plugin": "3.7.0",
     "govuk-frontend": "6.2.0",
     "moment": "2.30.1",
-    "sass": "1.100.0"
+    "sass": "1.101.0"
   }
 }
