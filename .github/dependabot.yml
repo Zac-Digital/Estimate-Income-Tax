@@ -36,15 +36,28 @@ updates:
       interval: "daily"
     cooldown:
       default-days: 7
+    ignore:
+      - dependency-name: "@playwright/*"
+      - dependency-name: "@axe-core/*"
+    groups:
+      npm-deps:
+        patterns:
+          - "*"
+        
+  - package-ecosystem: "npm"
+    directories:
+      - "src/IncomeTax.Presentation.Web.Node"
+      - "test/IncomeTax.Presentation.Web.Functional"
+    schedule:
+      interval: "daily"
+    cooldown:
+      default-days: 7
+    multi-ecosystem-group: playwright
     groups:
       playwright-deps:
         patterns:
           - "@playwright/*"
           - "@axe-core/*"
-        multi-ecosystem-group: playwright
-      npm-deps:
-        patterns:
-          - "*"
 
   - package-ecosystem: "docker"
     directory: "/"
@@ -59,14 +72,23 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "dotnet/aspnet"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "playwright"
     groups:
-      playwright-deps:
-        patterns:
-          - "mcr.microsoft.com/playwright"
-        multi-ecosystem-group: playwright
       docker-deps:
         patterns:
           - "*"
+        
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    cooldown:
+      default-days: 7
+    multi-ecosystem-group: playwright
+    groups:
+      playwright-deps:
+        patterns:
+          - "playwright"
         
   - package-ecosystem: "docker-compose"
     directory: "/"
