@@ -68,7 +68,7 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "dotnet/aspnet"
         update-types: ["version-update:semver-major"]
-      - dependency-name: "playwright"
+      - dependency-name: "mcr.microsoft.com/playwright"
     groups:
       docker-deps:
         patterns:
@@ -80,7 +80,7 @@ updates:
       default-days: 7
     multi-ecosystem-group: playwright-deps
     patterns:
-      - "playwright"
+      - "mcr.microsoft.com/playwright"
         
   - package-ecosystem: "docker-compose"
     directory: "/"
