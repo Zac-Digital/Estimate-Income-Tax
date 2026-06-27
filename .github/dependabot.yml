@@ -1,7 +1,7 @@
 version: 2
 
 multi-ecosystem-groups: 
-  playwright:
+  playwright-deps:
     schedule: 
       interval: "daily"
 
@@ -48,16 +48,12 @@ updates:
     directories:
       - "src/IncomeTax.Presentation.Web.Node"
       - "test/IncomeTax.Presentation.Web.Functional"
-    schedule:
-      interval: "daily"
     cooldown:
       default-days: 7
-    multi-ecosystem-group: playwright
-    groups:
-      playwright-deps:
-        patterns:
-          - "@playwright/*"
-          - "@axe-core/*"
+    multi-ecosystem-group: playwright-deps
+    patterns:
+      - "@playwright/*"
+      - "@axe-core/*"
 
   - package-ecosystem: "docker"
     directory: "/"
@@ -80,15 +76,11 @@ updates:
         
   - package-ecosystem: "docker"
     directory: "/"
-    schedule:
-      interval: "daily"
     cooldown:
       default-days: 7
-    multi-ecosystem-group: playwright
-    groups:
-      playwright-deps:
-        patterns:
-          - "playwright"
+    multi-ecosystem-group: playwright-deps
+    patterns:
+      - "playwright"
         
   - package-ecosystem: "docker-compose"
     directory: "/"
