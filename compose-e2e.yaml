@@ -1,0 +1,15 @@
+﻿services:
+  playwright:
+    container_name: Estimate-Income-Tax-Playwright
+    build:
+      context: ./test/IncomeTax.Presentation.Web.Functional
+      dockerfile: Dockerfile
+    environment:
+      - BASE_URL=https://ingress
+    volumes:
+      - ./test/IncomeTax.Presentation.Web.Functional/playwright-report:/test/playwright-report
+      - ./test/IncomeTax.Presentation.Web.Functional/test-results:/test/test-results
+    restart: no
+    depends_on:
+      - estimate-income-tax
+      - ingress

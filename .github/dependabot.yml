@@ -1,4 +1,10 @@
 version: 2
+
+multi-ecosystem-groups: 
+  playwright:
+    schedule: 
+      interval: "daily"
+
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -31,6 +37,11 @@ updates:
     cooldown:
       default-days: 7
     groups:
+      playwright-deps:
+        patterns:
+          - "@playwright/*"
+          - "@axe-core/*"
+        multi-ecosystem-group: playwright
       npm-deps:
         patterns:
           - "*"
@@ -49,6 +60,10 @@ updates:
       - dependency-name: "dotnet/aspnet"
         update-types: ["version-update:semver-major"]
     groups:
+      playwright-deps:
+        patterns:
+          - "mcr.microsoft.com/playwright"
+        multi-ecosystem-group: playwright
       docker-deps:
         patterns:
           - "*"

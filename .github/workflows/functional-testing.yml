@@ -10,6 +10,7 @@ on:
       - '.github/workflows/functional-testing.yml'
       - 'Dockerfile'
       - 'compose.yaml'
+      - 'compose-e2e.yaml'
   push:
     branches:
       - 'main'
@@ -20,6 +21,7 @@ on:
       - '.github/workflows/functional-testing.yml'
       - 'Dockerfile'
       - 'compose.yaml'
+      - 'compose-e2e.yaml'
 
 concurrency:
   group: '${{ github.workflow }}-${{ github.ref }}'
@@ -37,27 +39,16 @@ jobs:
         with:
           ref: ${{ github.ref }}
           persist-credentials: false
-
-      - name: Setup Node.JS
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
-        with:
-          node-version: 'lts/Krypton'
-
-      - name: Run Web Application
-        shell: bash
-        run: docker compose up -d
-
-      - name: Install Playwright
-        working-directory: ./test/IncomeTax.Presentation.Web.Functional
+        
+      - name: Run Playwright Suite
         shell: bash
         run: |
-          npm ci --ignore-scripts
-          npx playwright install --with-deps
-
-      - name: Run Functional Testing
-        working-directory: ./test/IncomeTax.Presentation.Web.Functional
-        shell: bash
-        run: npx playwright test --workers `nproc`
+          docker compose \
+          --progress plain \
+          -f compose.yaml \
+          -f compose-e2e.yaml \
+          up \
+          --exit-code-from playwright
 
       - name: Upload Report
         if: always()
