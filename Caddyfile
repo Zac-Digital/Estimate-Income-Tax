@@ -2,7 +2,7 @@
 	admin off
 }
 
-localhost {
+localhost, ingress {
 	tls internal
 	reverse_proxy estimate-income-tax:8080
 }

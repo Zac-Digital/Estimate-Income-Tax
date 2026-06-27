@@ -3,12 +3,13 @@ import {defineConfig, devices} from '@playwright/test';
 export default defineConfig({
     testDir: './tests',
     fullyParallel: true,
+    workers: '100%',
     forbidOnly: !!process.env.CI,
     retries: 1,
     reporter: [['html', {open: 'never'}], ['list']],
 
     use: {
-        baseURL: 'https://localhost:8443',
+        baseURL: process.env.BASE_URL || 'https://localhost:8443',
         ignoreHTTPSErrors: true,
 
         screenshot: 'only-on-failure',

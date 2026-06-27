@@ -64,13 +64,29 @@ The entry point in your browser is https://localhost:8443/
 
 ## Testing
 
+### Unit / Integration Testing
+
+To run the unit and/or integration tests, it's simply `dotnet test` from the root directory.
+
+### Functional Testing
+
 You must have Docker installed to run the functional tests. You can also run it natively but you'll have to change the endpoint in the Playwright config.
 
 To run the functional tests properly:
+
+#### Native Playwright Install
 
 - Ensure the web application is running with `docker compose up` from the root directory
 - In another terminal, `cd` into `test/IncomeTax.Presentation.Web.Functional`
 - Ensure you are up to date, execute `npm i` and then `npx playwright install`
 - To run the tests, execute `npx playwright test`
 
-To run the integration tests, it's simply `dotnet test` from the root directory.
+#### Docker
+
+The `compose-e2e.yaml` file is a fully automated Playwright test runner. It will run the web application, spin up the ingress server, and run the Playwright tests.
+
+This means the `functional-testing.yml` workflow is faster, as it doesn't need to install the Playwright dependencies or the browsers.
+
+It also means the Playwright tests can be run on any OS. It's a pain trying to get Playwright to run natively on Arch Linux for example.
+
+To run it, it's this in the terminal: `docker compose --progress plain -f compose.yaml -f compose-e2e.yaml up --build --exit-code-from playwright`
