@@ -67,7 +67,7 @@ test.describe('Core End-To-End', () => {
 
     test('Required + Optional Hours Worked / Week', async ({page}) => {
         await test.step('Start from Home Page', async () => {
-            await page.goto('/INVALID');
+            await page.goto('/');
             await page.getByTestId('button-start-now').click();
             await expect(page).toHaveURL('/salary');
         });
