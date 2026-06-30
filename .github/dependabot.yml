@@ -43,11 +43,11 @@ updates:
       default-days: 7
     ignore:
       - dependency-name: "node"
-        update-types: ["version-update:semver-major"]
+        update-types: [ "version-update:semver-major" ]
       - dependency-name: "dotnet/sdk"
-        update-types: ["version-update:semver-major"]
+        update-types: [ "version-update:semver-major" ]
       - dependency-name: "dotnet/aspnet"
-        update-types: ["version-update:semver-major"]
+        update-types: [ "version-update:semver-major" ]
     groups:
       docker-deps:
         patterns:
@@ -61,7 +61,7 @@ updates:
       default-days: 7
     ignore:
       - dependency-name: "caddy"
-        update-types: ["version-update:semver-major"]
+        update-types: [ "version-update:semver-major" ]
     groups:
       docker-compose-deps:
         patterns:

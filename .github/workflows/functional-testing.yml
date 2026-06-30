@@ -26,8 +26,8 @@ on:
 concurrency:
   group: '${{ github.workflow }}-${{ github.ref }}'
   cancel-in-progress: true
-  
-permissions: {}
+
+permissions: { }
 
 jobs:
   build-and-test:
@@ -39,7 +39,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
           persist-credentials: false
-        
+
       - name: Run Playwright Suite
         shell: bash
         run: |
