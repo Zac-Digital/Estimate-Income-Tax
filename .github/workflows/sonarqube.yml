@@ -23,8 +23,8 @@ on:
 concurrency:
   group: '${{ github.workflow }}-${{ github.ref }}'
   cancel-in-progress: true
-  
-permissions: {}
+
+permissions: { }
 
 env:
   DOTNET_VERSION: '10.x'
@@ -35,7 +35,7 @@ jobs:
     if: ${{ github.actor != 'dependabot[bot]' }}
     name: Build, Test & Analyse
     runs-on: ubuntu-24.04
-    permissions: 
+    permissions:
       contents: read       # For SonarQube
       pull-requests: write # For SonarQube
     steps:
