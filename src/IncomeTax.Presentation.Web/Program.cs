@@ -13,10 +13,6 @@ public static class Program
     public static void Main(string[] args)
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-
-        builder.Services.AddDataProtection()
-            .PersistKeysToFileSystem(new DirectoryInfo("/home/app/.aspnet/DataProtection-Keys"))
-            .SetApplicationName("Estimate-Income-Tax");
         
         builder.Services.AddRazorPages()
             .AddMvcOptions(options => options.Filters.Add<JourneyFilter>());
