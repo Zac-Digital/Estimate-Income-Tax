@@ -1,5 +1,5 @@
 # -- Build Node -- #
-FROM node:26-alpine@sha256:725aeba2364a9b16beae49e180d83bd597dbd0b15c47f1f28875c290bfd255b9 AS build-node
+FROM node:26-alpine@sha256:e88a35be04478413b7c71c455cd9865de9b9360e1f43456be5951032d7ac1a66 AS build-node
 WORKDIR /src
 
 COPY ["src/IncomeTax.Presentation.Web.Node/package.json", "."]
@@ -13,7 +13,7 @@ RUN npm run build
 # -- Build Node -- #
 
 # -- Build .NET -- #
-FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine@sha256:940f919ae84dd92ccd4aab7686fa5b777870b006c9360351039e16bcaad73d89 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine@sha256:d8ee39817ca03a3757288e83c37ed73cc969a286c603b827c7cbe33add1c2d1c AS build
 WORKDIR /src
 
 COPY ["Directory.Build.props", "."]
@@ -33,7 +33,7 @@ RUN dotnet publish src/IncomeTax.Presentation.Web/IncomeTax.Presentation.Web.csp
 # -- Build .NET -- #
 
 # -- Runtime -- #
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine@sha256:57bd717ac18ff6c8a39cc0ee4a76c1f15adc46df50434c73eff0c3f1df4c88f0
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine@sha256:27b6b84beeede74fd16886177d360799c8e4299ceadfbd64eef57bafead7878a
 RUN apk add --no-cache icu-libs icu-data-full
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 USER app
