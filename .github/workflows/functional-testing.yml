@@ -58,14 +58,14 @@ jobs:
           SHARD_INDEX: ${{ matrix.shardIndex }}
           SHARD_TOTAL: ${{ matrix.shardTotal }}
 
-      - name: Upload Report ${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+      - name: Upload Blob Report ${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           compression-level: '9'
-          if-no-files-found: 'ignore'
+          if-no-files-found: 'error'
           name: 'Playwright-Report-${{ matrix.shardIndex }}'
-          path: './test/IncomeTax.Presentation.Web.Functional/playwright-report'
+          path: './test/IncomeTax.Presentation.Web.Functional/blob-report'
           retention-days: 1
 
   upload-report:
@@ -98,11 +98,11 @@ jobs:
           path: './test/IncomeTax.Presentation.Web.Functional/staging'
           pattern: 'Playwright-Report-*'
 
-      - name: Generate Report
+      - name: Generate HTML Report
         working-directory: ./test/IncomeTax.Presentation.Web.Functional
         run: npx playwright merge-reports --reporter html ./staging
 
-      - name: Upload Report
+      - name: Upload HTML Report
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:

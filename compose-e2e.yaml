@@ -8,6 +8,7 @@
     environment:
       - BASE_URL=https://ingress
     volumes:
+      - ./test/IncomeTax.Presentation.Web.Functional/blob-report:/test/blob-report
       - ./test/IncomeTax.Presentation.Web.Functional/playwright-report:/test/playwright-report
       - ./test/IncomeTax.Presentation.Web.Functional/test-results:/test/test-results
     restart: no
