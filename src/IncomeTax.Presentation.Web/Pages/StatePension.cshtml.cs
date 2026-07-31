@@ -27,7 +27,7 @@ public class StatePension(SessionService sessionService) : PageModel
             return Page();
         }
         
-        sessionService.Update(JourneyStage.StatePension, Pensioner!.Value ? "Yes" : "No");
+        sessionService.Update(JourneyStage.StatePension, Pensioner is not null && Pensioner.Value ? "Yes" : "No");
 
         return RedirectToPage(nameof(JourneyStage.CheckAnswers));
     }

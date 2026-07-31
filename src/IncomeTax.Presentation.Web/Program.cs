@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using IncomeTax.Application.Journey;
 using IncomeTax.Application.Session;
 using IncomeTax.Presentation.Web.Filters;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
 
 namespace IncomeTax.Presentation.Web;
