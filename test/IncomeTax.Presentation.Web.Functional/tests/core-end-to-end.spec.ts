@@ -31,7 +31,7 @@ test.describe('Core End-To-End', () => {
     
     test('Required + Optional Days Worked / Week', async ({page}) => {
         await test.step('Start from Home Page', async () => {
-            await page.goto('/');
+            await page.goto('/eranjiogeijnragijnaergnjerahiojearwjnaerojaergjnomergojeragg');
             await page.getByTestId('button-start-now').click();
             await expect(page).toHaveURL('/salary');
         });
@@ -40,7 +40,7 @@ test.describe('Core End-To-End', () => {
             await page.getByTestId('amount').fill('128.32');
             await page.getByLabel('Daily').click();
             await page.getByTestId('button').click();
-            await expect(page).toHaveURL('/days');
+            await expect(page).toHaveURL('/dayseaeajrawkjhrajkhrr');
         });
         
         await test.step('Enter Days Worked Information', async () => {
