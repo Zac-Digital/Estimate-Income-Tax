@@ -31,8 +31,13 @@ permissions: { }
 
 jobs:
   build-and-test:
-    name: Build & Run Functional Test Suite
+    name: Build & Run Functional Test Suite - ${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [ 1, 2, 3, 4, 5, 6, 7, 8 ]
+        shardTotal: [ 8 ]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
@@ -49,12 +54,60 @@ jobs:
           -f compose-e2e.yaml \
           up \
           --exit-code-from playwright
+        env:
+          SHARD_INDEX: ${{ matrix.shardIndex }}
+          SHARD_TOTAL: ${{ matrix.shardTotal }}
 
-      - name: Upload Report
-        if: always()
+      - name: Upload Blob Report ${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
+          compression-level: '9'
+          if-no-files-found: 'error'
+          name: 'Playwright-Report-${{ matrix.shardIndex }}'
+          path: './test/IncomeTax.Presentation.Web.Functional/blob-report'
+          retention-days: 1
+
+  upload-report:
+    needs: [ build-and-test ]
+    if: ${{ !cancelled() }}
+    name: Upload Report
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          ref: ${{ github.ref }}
+          persist-credentials: false
+
+      - name: Install Node.JS
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          cache: 'npm'
+          cache-dependency-path: './test/IncomeTax.Presentation.Web.Functional/package-lock.json'
+          node-version: 26
+
+      - name: Install Playwright
+        working-directory: ./test/IncomeTax.Presentation.Web.Functional
+        run: npm ci --ignore-scripts
+
+      - name: Download Shard Artefacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          merge-multiple: true
+          path: './test/IncomeTax.Presentation.Web.Functional/staging'
+          pattern: 'Playwright-Report-*'
+
+      - name: Generate HTML Report
+        working-directory: ./test/IncomeTax.Presentation.Web.Functional
+        run: npx playwright merge-reports --reporter html ./staging
+
+      - name: Upload HTML Report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          compression-level: '9'
+          if-no-files-found: 'error'
           name: 'Playwright Report'
           path: './test/IncomeTax.Presentation.Web.Functional/playwright-report'
-          compression-level: '9'
-          if-no-files-found: 'ignore'
+          retention-days: 14

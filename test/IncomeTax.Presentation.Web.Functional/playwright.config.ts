@@ -6,7 +6,7 @@ export default defineConfig({
     workers: '100%',
     forbidOnly: !!process.env.CI,
     retries: 1,
-    reporter: [['html', {open: 'never'}], ['list']],
+    reporter: [['blob'], ['html', {open: 'never'}], ['list']],
 
     use: {
         baseURL: process.env.BASE_URL || 'https://localhost:8443',
