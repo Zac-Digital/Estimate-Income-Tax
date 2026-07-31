@@ -4,6 +4,7 @@
     build:
       context: ./test/IncomeTax.Presentation.Web.Functional
       dockerfile: Dockerfile
+    command: npx playwright test --shard=${SHARD_INDEX:-1}/${SHARD_TOTAL:-1}
     environment:
       - BASE_URL=https://ingress
     volumes:
