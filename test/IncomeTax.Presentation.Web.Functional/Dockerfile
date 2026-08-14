@@ -1,4 +1,4 @@
-﻿FROM mcr.microsoft.com/playwright:v1.61.1-resolute@sha256:6b3d024edb132382b0064c4ca56abec52d5df95b93c63dd61a81d3a37abdef7f
+FROM mcr.microsoft.com/playwright:v1.62.1-resolute@sha256:aebd85bce8056dcdc2269853fd94ea432b6a201da4f0ef125b509489ecd52ddb
 WORKDIR /test
 
 COPY ["package.json", "."]
