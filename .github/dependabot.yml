@@ -36,7 +36,9 @@ updates:
           - "*"
 
   - package-ecosystem: "docker"
-    directory: "/"
+    directories:
+      - "/"
+      - "test/IncomeTax.Presentation.Web.Functional"
     schedule:
       interval: "daily"
     cooldown:
