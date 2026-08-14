@@ -67,7 +67,6 @@ jobs:
           /d:sonar.coverage.exclusions=**/certs/**,**/src/IncomeTax.Presentation.Web/Pages/**,**/src/IncomeTax.Presentation.Web.Node/** \
           /d:sonar.cpd.exclusions=**playwright.config.ts \
           /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
-          /d:sonar.scanner.skipJreProvisioning=true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
