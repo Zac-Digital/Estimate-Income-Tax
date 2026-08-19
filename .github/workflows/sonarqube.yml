@@ -58,8 +58,7 @@ jobs:
           /k:"zac-digital_estimate-income-tax" \
           /o:"zac-digital" \
           /d:sonar.token="${SONAR_TOKEN}" \
-          /d:sonar.exclusions=**/certs/** \
-          /d:sonar.coverage.exclusions=**/certs/**,**/src/IncomeTax.Presentation.Web/Pages/**,**/src/IncomeTax.Presentation.Web.Node/** \
+          /d:sonar.coverage.exclusions=**/src/IncomeTax.Presentation.Web/Pages/**,**/src/IncomeTax.Presentation.Web.Node/**,**/test/IncomeTax.Presentation.Web.Functional/** \
           /d:sonar.cpd.exclusions=**playwright.config.ts \
           /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
         env:
