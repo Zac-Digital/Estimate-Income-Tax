@@ -1,20 +1,33 @@
 import {defineConfig, devices} from '@playwright/test';
 
+export const BASE_URL: string = 'http://localhost:5062';
+
 export default defineConfig({
     testDir: './tests',
     fullyParallel: true,
     workers: '100%',
     forbidOnly: !!process.env.CI,
     retries: 1,
-    reporter: [['blob'], ['html', {open: 'never'}], ['list']],
+    reporter: [['html', {open: 'never'}], [process.env.CI ? 'github' : 'list']],
 
     use: {
-        baseURL: process.env.BASE_URL || 'https://localhost:8443',
-        ignoreHTTPSErrors: true,
+        baseURL: BASE_URL,
 
         screenshot: 'only-on-failure',
         video: 'on-first-retry',
         trace: 'on-first-retry'
+    },
+
+    webServer: {
+        command: `\
+            npm --prefix ../../src/IncomeTax.Presentation.Web.Node ci --ignore-scripts && \
+            npm --prefix ../../src/IncomeTax.Presentation.Web.Node run build && \
+            dotnet run --project ../../src/IncomeTax.Presentation.Web\
+        `,
+        stdout: 'pipe',
+        stderr: 'pipe',
+        url: BASE_URL,
+        reuseExistingServer: !process.env.CI,
     },
 
     projects: [
