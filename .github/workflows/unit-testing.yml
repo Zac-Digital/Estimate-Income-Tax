@@ -44,7 +44,7 @@ jobs:
 
       - name: .NET Test
         shell: bash
-        run: dotnet test --no-build --no-restore --configuration Release --logger "trx;LogFileName=results.trx"
+        run: dotnet test --configuration Release --logger "trx;LogFileName=results.trx"
 
       - name: Upload Report
         if: ${{ !cancelled() }}

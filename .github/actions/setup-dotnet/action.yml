@@ -1,4 +1,5 @@
 name: Setup .NET
+description: .
 
 runs:
   using: composite
@@ -8,11 +9,3 @@ runs:
       with:
         dotnet-version: '10.x'
         dotnet-quality: 'ga'
-
-    - name: .NET Restore
-      shell: bash
-      run: dotnet restore
-
-    - name: .NET Build
-      shell: bash
-      run: dotnet build --no-restore --configuration Release

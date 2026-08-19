@@ -26,9 +26,6 @@ concurrency:
 
 permissions: { }
 
-env:
-  DOTNET_VERSION: '10.x'
-
 jobs:
   build-test-analyse:
     if: ${{ github.actor != 'dependabot[bot]' }}
@@ -44,11 +41,8 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Setup .NET ${{ env.DOTNET_VERSION }}
-        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
-          dotnet-quality: 'ga'
+      - name: Setup .NET
+        uses: ./.github/actions/setup-dotnet
 
       - name: Install .NET Tooling
         shell: bash
