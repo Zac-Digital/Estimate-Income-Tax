@@ -8,7 +8,11 @@ export default defineConfig({
     workers: '100%',
     forbidOnly: !!process.env.CI,
     retries: 1,
-    reporter: [['html', {open: 'never'}], [process.env.CI ? 'github' : 'list']],
+    reporter: [
+        ['html', { open: 'never' }],
+        ['list'],
+        ...(process.env.CI ? [['github'] as const] : []),
+    ],
 
     use: {
         baseURL: BASE_URL,
