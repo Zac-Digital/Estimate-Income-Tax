@@ -58,6 +58,7 @@ jobs:
           key: Playwright-${{ runner.os }}-${{ hashFiles('./test/IncomeTax.Presentation.Web.Functional/package-lock.json') }}
           
       - name: Install Dependencies
+        working-directory: ./test/IncomeTax.Presentation.Web.Functional
         run: |
           npm ci --ignore-scripts
           
