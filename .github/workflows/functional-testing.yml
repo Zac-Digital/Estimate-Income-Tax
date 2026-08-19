@@ -10,7 +10,6 @@ on:
       - '.github/workflows/functional-testing.yml'
       - 'Dockerfile'
       - 'compose.yaml'
-      - 'compose-e2e.yaml'
   push:
     branches:
       - 'main'
@@ -21,7 +20,6 @@ on:
       - '.github/workflows/functional-testing.yml'
       - 'Dockerfile'
       - 'compose.yaml'
-      - 'compose-e2e.yaml'
 
 concurrency:
   group: '${{ github.workflow }}-${{ github.ref }}'
@@ -31,13 +29,9 @@ permissions: { }
 
 jobs:
   build-and-test:
-    name: Build & Run Functional Test Suite - ${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+    name: Build & Run Functional Test Suite
     runs-on: ubuntu-24.04
-    strategy:
-      fail-fast: false
-      matrix:
-        shardIndex: [ 1, 2, 3, 4, 5, 6, 7, 8 ]
-        shardTotal: [ 8 ]
+    timeout-minutes: 60
     steps:
       - name: Checkout Repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -45,69 +39,40 @@ jobs:
           ref: ${{ github.ref }}
           persist-credentials: false
 
-      - name: Run Playwright Suite
-        shell: bash
-        run: |
-          docker compose \
-          --progress plain \
-          -f compose.yaml \
-          -f compose-e2e.yaml \
-          up \
-          --exit-code-from playwright
-        env:
-          SHARD_INDEX: ${{ matrix.shardIndex }}
-          SHARD_TOTAL: ${{ matrix.shardTotal }}
-
-      - name: Upload Blob Report ${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          compression-level: '9'
-          if-no-files-found: 'error'
-          name: 'Playwright-Report-${{ matrix.shardIndex }}'
-          path: './test/IncomeTax.Presentation.Web.Functional/blob-report'
-          retention-days: 1
-
-  upload-report:
-    needs: [ build-and-test ]
-    if: ${{ !cancelled() }}
-    name: Upload Report
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        with:
-          ref: ${{ github.ref }}
-          persist-credentials: false
-
-      - name: Install Node.JS
+      - name: Setup Node.JS
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
           cache: 'npm'
           cache-dependency-path: './test/IncomeTax.Presentation.Web.Functional/package-lock.json'
           node-version: 26
 
-      - name: Install Playwright
-        working-directory: ./test/IncomeTax.Presentation.Web.Functional
-        run: npm ci --ignore-scripts
-
-      - name: Download Shard Artefacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+      - name: Browser Cache
+        id: cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
-          merge-multiple: true
-          path: './test/IncomeTax.Presentation.Web.Functional/staging'
-          pattern: 'Playwright-Report-*'
+          path: '~/.cache/ms-playwright'
+          key: Playwright-${{ runner.os }}-${{ hashFiles('./test/IncomeTax.Presentation.Web.Functional/package-lock.json') }}
 
-      - name: Generate HTML Report
+      - name: Install Dependencies
         working-directory: ./test/IncomeTax.Presentation.Web.Functional
-        run: npx playwright merge-reports --reporter html ./staging
+        run: |
+          npm ci --ignore-scripts
+          [ "$CACHE_HIT" != "true" ] && npx playwright install --with-deps || npx playwright install-deps
+        env:
+          CACHE_HIT: ${{ steps.cache.outputs.cache-hit }}
+
+      - name: Run Playwright
+        working-directory: ./test/IncomeTax.Presentation.Web.Functional
+        run: npx playwright test
+        env:
+          CI: true
 
       - name: Upload HTML Report
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           compression-level: '9'
-          if-no-files-found: 'error'
+          if-no-files-found: 'warn'
           name: 'Playwright Report'
           path: './test/IncomeTax.Presentation.Web.Functional/playwright-report'
-          retention-days: 14
+          retention-days: 7

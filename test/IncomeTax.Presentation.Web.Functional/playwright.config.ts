@@ -1,20 +1,35 @@
 import {defineConfig, devices} from '@playwright/test';
 
+export const BASE_URL: string = 'https://localhost:8443';
+
 export default defineConfig({
     testDir: './tests',
     fullyParallel: true,
     workers: '100%',
     forbidOnly: !!process.env.CI,
     retries: 1,
-    reporter: [['blob'], ['html', {open: 'never'}], ['list']],
+    reporter: [
+        ['html', { open: 'never' }],
+        ['list'],
+        ...(process.env.CI ? [['github'] as const] : []),
+    ],
 
     use: {
-        baseURL: process.env.BASE_URL || 'https://localhost:8443',
+        baseURL: BASE_URL,
         ignoreHTTPSErrors: true,
 
         screenshot: 'only-on-failure',
         video: 'on-first-retry',
         trace: 'on-first-retry'
+    },
+
+    webServer: {
+        command: 'docker compose -f ../../compose.yaml up --build',
+        ignoreHTTPSErrors: true,
+        reuseExistingServer: !process.env.CI,
+        stdout: 'pipe',
+        stderr: 'pipe',
+        url: BASE_URL,
     },
 
     projects: [
