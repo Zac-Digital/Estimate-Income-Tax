@@ -40,36 +40,28 @@ jobs:
           ref: ${{ github.ref }}
           persist-credentials: false
 
-      - name: Setup Node.JS
+      - name: Install Node.JS
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
           cache: 'npm'
           cache-dependency-path: './test/IncomeTax.Presentation.Web.Functional/package-lock.json'
           node-version: 26
 
-      - name: Setup .NET
-        uses: ./.github/actions/setup-dotnet
-          
       - name: Browser Cache
         id: cache
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
           path: '~/.cache/ms-playwright'
           key: Playwright-${{ runner.os }}-${{ hashFiles('./test/IncomeTax.Presentation.Web.Functional/package-lock.json') }}
-          
+
       - name: Install Dependencies
         working-directory: ./test/IncomeTax.Presentation.Web.Functional
         run: |
           npm ci --ignore-scripts
-          
-          if [ "${{ steps.cache.outputs.cache-hit }}" != "true" ]; then
-            echo "Cache Miss - Installing Browsers & Dependencies..."
-            npx playwright install --with-deps
-          else
-            echo "Cache Hit - Installing Dependencies Only.."
-            npx playwright install-deps
-          fi
-          
+          [ "$CACHE_HIT" != "true" ] && npx playwright install --with-deps || npx playwright install-deps
+        env:
+          CACHE_HIT: ${{ steps.cache.outputs.cache-hit }}
+
       - name: Run Playwright
         working-directory: ./test/IncomeTax.Presentation.Web.Functional
         run: npx playwright test

@@ -1,6 +1,6 @@
 import {defineConfig, devices} from '@playwright/test';
 
-export const BASE_URL: string = 'http://localhost:5062';
+export const BASE_URL: string = 'https://localhost:8443';
 
 export default defineConfig({
     testDir: './tests',
@@ -12,6 +12,7 @@ export default defineConfig({
 
     use: {
         baseURL: BASE_URL,
+        ignoreHTTPSErrors: true,
 
         screenshot: 'only-on-failure',
         video: 'on-first-retry',
@@ -19,15 +20,12 @@ export default defineConfig({
     },
 
     webServer: {
-        command: `\
-            npm --prefix ../../src/IncomeTax.Presentation.Web.Node ci --ignore-scripts && \
-            npm --prefix ../../src/IncomeTax.Presentation.Web.Node run build && \
-            dotnet run --project ../../src/IncomeTax.Presentation.Web\
-        `,
+        command: 'docker compose -f ../../compose.yaml up --build',
+        ignoreHTTPSErrors: true,
+        reuseExistingServer: !process.env.CI,
         stdout: 'pipe',
         stderr: 'pipe',
         url: BASE_URL,
-        reuseExistingServer: !process.env.CI,
     },
 
     projects: [
