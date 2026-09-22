@@ -1,4 +1,4 @@
-﻿name: Dependabot - Update WWWROOT
+name: Dependabot - Update WWWROOT
 
 on:
   pull_request:
@@ -12,18 +12,18 @@ concurrency:
 permissions: { }
 
 jobs:
-  update-frontend:
+  update-wwwroot:
     if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
-    name: Process NPM & Commit Change
+    name: Build, Test & Analyse
     runs-on: ubuntu-26.04
     permissions:
-      contents: write
+      contents: write # Committing to PR
     steps:
       - name: Checkout Repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: ${{ github.ref }}
-          persist-credentials: true
+          ref: ${{ github.head_ref }}
+          persist-credentials: true # Committing to PR
 
       - name: Setup Node.JS
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020

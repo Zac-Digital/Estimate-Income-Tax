@@ -1,3 +1,9 @@
 rules:
   secrets-outside-env:
     disable: true
+  artipacked:
+    ignore:
+      - update-wwwroot.yml:22
+  superfluous-actions:
+    ignore:
+      - update-wwwroot.yml:41
