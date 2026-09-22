@@ -3,7 +3,7 @@ name: Dependabot - Update WWWROOT
 on:
   pull_request:
     paths:
-      - 'src/IncomeTax.Presentation.Web.Node'
+      - 'src/IncomeTax.Presentation.Web.Node/**'
 
 concurrency:
   group: '${{ github.workflow }}-${{ github.ref }}'
