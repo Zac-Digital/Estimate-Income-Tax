@@ -14,7 +14,7 @@ permissions: { }
 jobs:
   update-wwwroot:
     if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
-    name: Build, Test & Analyse
+    name: Process NPM & Commit Change
     runs-on: ubuntu-26.04
     permissions:
       contents: write # Committing to PR
