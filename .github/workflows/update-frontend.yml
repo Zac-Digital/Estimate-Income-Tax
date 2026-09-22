@@ -1,0 +1,44 @@
+﻿name: Dependabot - Update WWWROOT
+
+on:
+  pull_request:
+    paths:
+      - 'src/IncomeTax.Presentation.Web.Node'
+
+concurrency:
+  group: '${{ github.workflow }}-${{ github.ref }}'
+  cancel-in-progress: true
+
+permissions: { }
+
+jobs:
+  update-frontend:
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
+    name: Process NPM & Commit Change
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.ref }}
+          persist-credentials: true
+
+      - name: Setup Node.JS
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          cache: 'npm'
+          cache-dependency-path: './src/IncomeTax.Presentation.Web.Node/package-lock.json'
+          node-version: 26
+
+      - name: Process NPM
+        working-directory: ./src/IncomeTax.Presentation.Web.Node
+        run: |
+          npm ci --ignore-scripts
+          npm run build
+
+      - name: Commit Change
+        uses: stefanzweifel/git-auto-commit-action@4a55954c782fc1ea30b9056cd3e7a2b40ca8887d
+        with:
+          commit_message: 'chore: update wwwroot'
