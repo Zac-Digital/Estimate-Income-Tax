@@ -1,5 +1,5 @@
 # -- Build Node -- #
-FROM node:26-alpine@sha256:ef24c5053d50fdc3e4e56eb4e7ddb7861874ab0fdc797046ba897581deb8e868 AS build-node
+FROM node:26-alpine@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 AS build-node
 WORKDIR /src
 
 COPY ["src/IncomeTax.Presentation.Web.Node/package.json", "."]
